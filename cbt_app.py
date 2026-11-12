@@ -1,5 +1,4 @@
 import streamlit as st
-import time
 
 st.set_page_config(page_title="Gabriel CBT Pro", layout="centered")
 st.title("📚 Gabriel CBT Pro")
@@ -31,10 +30,10 @@ if is_admin:
     opt2 = st.sidebar.text_input("Option 2")
     opt3 = st.sidebar.text_input("Option 3")
     opt4 = st.sidebar.text_input("Option 4")
-    correct = st.sidebar.selectbox("Correct Answer", ["Option 1","Option 2","Option 3","Option 4"])
+    correct = st.sidebar.selectbox("Correct Answer", ["Option 1", "Option 2", "Option 3", "Option 4"])
     if st.sidebar.button("Add Question"):
         opts = [opt1, opt2, opt3, opt4]
-        ans_map = {"Option 1":opt1,"Option 2":opt2,"Option 3":opt3,"Option 4":opt4}
+        ans_map = {"Option 1": opt1, "Option 2": opt2, "Option 3": opt3, "Option 4": opt4}
         if new_q and all(opts):
             st.session_state.questions.append({"q": new_q, "options": opts, "answer": ans_map[correct]})
             st.sidebar.success("Question Added!")
