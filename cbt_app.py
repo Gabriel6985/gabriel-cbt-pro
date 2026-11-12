@@ -3,12 +3,43 @@ from datetime import datetime, timedelta
 
 st.set_page_config(page_title="Gabriel CBT Pro", page_icon="📝")
 
-# --- TITLE ---
-st.title("📝 Gabriel CBT Pro")
-st.markdown("**Built by ACHONWA GABRIEL**")
+# --- COLOURS / DESIGN ---
+st.markdown("""
+<style>
+    .main { background-color: #f0f8ff; }
+    h1 { color: #1E90FF !important; text-align: center; }
+    .stButton>button {
+        background-color: #1E90FF;
+        color: white;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 10px;
+        padding: 10px 20px;
+        width: 100%;
+    }
+    .stButton>button:hover { background-color: #FF4500; color: white; }
+    [data-testid="stSidebar"] { background-color: #001F3F !important; }
+    [data-testid="stSidebar"] * { color: white !important; }
+    .stSelectbox, .stTextInput { background-color: white; border-radius: 10px; }
+</style>
+""", unsafe_allow_html=True)
+
+ALL_SUBJECTS = [
+    "Mathematics", "English Language", "Physics", "Chemistry", "Biology",
+    "Further Mathematics", "Economics", "Government", "Literature in English",
+    "CRS", "IRS", "Geography", "Commerce", "Financial Accounting",
+    "Agricultural Science", "Computer Studies / ICT", "Social Studies",
+    "Basic Science", "Basic Technology", "Civic Education", "History",
+    "Home Economics", "Business Studies", "French", "Yoruba", "Igbo",
+    "Hausa", "Fine Arts", "Music", "Physical & Health Education",
+]
+
+# --- HEADER WITH COLOUR ---
+st.markdown("<h1 style='color:#1E90FF;'>📝 Gabriel CBT Pro</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align:center; color:#FF4500;'>Built by ACHONWA GABRIEL</h3>", unsafe_allow_html=True)
+st.markdown("<p style='text-align:center; color:green; font-weight:bold;'>Welcome to Your Online Exam Portal 🎓</p>", unsafe_allow_html=True)
 st.markdown("---")
 
-# --- SESSION STATE ---
 if "questions" not in st.session_state:
     st.session_state.questions = [
         {"q": "What is 2 + 2?", "options": ["3", "4", "5", "6"], "answer": "4", "subject": "Mathematics"},
@@ -33,7 +64,7 @@ if password and is_admin:
 
 if is_admin:
     st.sidebar.subheader("Add New Question")
-    new_subject = st.sidebar.selectbox("Subject", ["Mathematics", "English", "Social Studies", "Science", "CRS", "Computer Studies"])
+    new_subject = st.sidebar.selectbox("Subject", ALL_SUBJECTS)
     new_q = st.sidebar.text_area("Question")
     o1 = st.sidebar.text_input("Option 1")
     o2 = st.sidebar.text_input("Option 2")
@@ -58,14 +89,14 @@ if is_admin:
 
 # --- STUDENT LOGIN ---
 if not st.session_state.exam_started:
-    st.subheader("Student Login")
+    st.markdown("<h3 style='color:purple;'>👨‍🎓 Student Login</h3>", unsafe_allow_html=True)
     name = st.text_input("Student Name")
-    subject = st.selectbox("Select Subject", ["Mathematics", "English", "Social Studies", "Science", "CRS", "Computer Studies"])
+    subject = st.selectbox("Select Subject", ALL_SUBJECTS)
     class_ = st.selectbox("Select Class", ["JSS 1", "JSS 2", "JSS 3", "SS 1", "SS 2", "SS 3"])
     term = st.selectbox("Select Term", ["First Term", "Second Term", "Third Term"])
     exam_time = st.selectbox("Select Time", ["10 Minutes", "20 Minutes", "30 Minutes", "1 Hour"])
 
-    if st.button("Enter / Start Exam"):
+    if st.button("Enter / Start Exam 🚀"):
         if not name:
             st.error("Please enter your name!")
         else:
@@ -80,7 +111,6 @@ else:
     info = st.session_state.student_info
     st.info(f"Name: {info['name']} | Class: {info['class']} | Subject: {info['subject']} | Term: {info['term']}")
 
-    # TIMER
     end_time = st.session_state.start_time + timedelta(minutes=info['mins'])
     remaining = end_time - datetime.now()
     total_seconds = int(remaining.total_seconds())
@@ -96,7 +126,7 @@ else:
         if mins_left <= 5:
             st.error("⚠️ Less than 5 minutes left!")
 
-    st.subheader(f"{info['subject']} - {info['term']} Exam")
+    st.markdown(f"<h3 style='color:green;'>{info['subject']} - {info['term']} Exam</h3>", unsafe_allow_html=True)
     filtered = [q for q in st.session_state.questions if q.get("subject") == info["subject"]]
     if not filtered:
         filtered = st.session_state.questions
@@ -109,7 +139,7 @@ else:
 
     col1, col2 = st.columns(2)
     with col1:
-        if st.button("Submit Exam"):
+        if st.button("Submit Exam ✅"):
             score = sum(1 for i, q in enumerate(filtered) if answers[i] == q["answer"])
             st.success(f"🎉 {info['name']}, your score is {score}/{len(filtered)}")
             st.session_state.results.append({"name": info["name"], "class": info["class"], "subject": info["subject"], "term": info["term"], "score": score, "total": len(filtered)})
@@ -121,6 +151,6 @@ else:
         st.session_state.exam_started = False
         st.rerun()
 
-# --- FOOTER ---
 st.markdown("---")
-st.markdown("<center>Built by ACHONWA GABRIEL ❤️</center>", unsafe_allow_html=True)
+st.markdown("<center><h3 style='color:#FF4500;'>Built by ACHONWA GABRIEL ❤️</h3></center>", unsafe_allow_html=True)
+st.markdown("<center><p style='color:blue;'>© 2026 Gabriel CBT Pro - All Rights Reserved</p></center>", unsafe_allow_html=True)
