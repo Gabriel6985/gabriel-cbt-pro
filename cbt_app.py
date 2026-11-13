@@ -6,29 +6,21 @@ st.set_page_config(page_title="EBUNTAYO SECONDARY SCHOOL - CBT Portal", page_ico
 
 SCHOOL_NAME = "EBUNTAYO SECONDARY SCHOOL"
 
-# --- REAL CBT COLOURS - FIXED VISIBILITY ---
 st.markdown("""
 <style>
     .stApp { background-color: #0B2C4A !important; }
-    /* TOP HEADER - SCHOOL NAME SUPER BOLD */
     .top-bar { background: linear-gradient(90deg, #001A33 0%, #0B2C4A 50%, #001A33 100%); padding: 30px 12px 24px 12px; border-radius: 12px; text-align: center; border: 3px solid #FFD700; box-shadow: 0 6px 25px rgba(0,0,0,0.6); margin-top: 5px; }
     .school-name { color: #FFFFFF !important; font-size: 48px !important; font-weight: 900 !important; letter-spacing: 1px; margin: 0; line-height: 1.05; font-family: 'Arial Black', Arial, sans-serif !important; text-transform: uppercase; -webkit-text-stroke: 1.5px #FFD700; text-shadow: 3px 3px 0px #000, 5px 5px 10px rgba(0,0,0,0.8); }
     .app-name { color: #FFD700 !important; font-size: 24px !important; font-weight: 900; margin: 10px 0 0 0; letter-spacing: 3px; text-shadow: 2px 2px 4px #000; }
     .subtitle { color: #FFFFFF !important; font-size: 12px; margin: 6px 0 0 0; letter-spacing: 2px; font-weight: 700; }
-    /* CARDS - WHITE AND CLEAR */
     .card { background-color: #FFFFFF !important; padding: 26px; border-radius: 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.4); margin-top: 18px; border-top: 6px solid #FFD700; }
-    .card h3, .card h2 { color: #0B2C4A !important; }
-    /* LOGIN TITLE - VERY BOLD AND VISIBLE */
-    .login-title { color: #0B2C4A !important; font-size: 30px !important; font-weight: 900 !important; text-align: center; margin: 0 0 5px 0; text-transform: uppercase; letter-spacing: 1px; font-family: 'Arial Black', sans-serif; }
+    .login-title { color: #0B2C4A !important; font-size: 30px !important; font-weight: 900 !important; text-align: center; margin: 0 0 5px 0; text-transform: uppercase; font-family: 'Arial Black', sans-serif; }
     .login-sub { text-align:center; color: #444 !important; font-size: 14px; font-weight: 600; margin-bottom: 18px; }
-    /* LABELS - THIS WAS THE PROBLEM, NOW FIXED TO BLACK ON WHITE CARD */
     label { font-weight: 800 !important; color: #0B2C4A !important; font-size: 16px !important; }
-    /* ALSO MAKE ALL TEXT OUTSIDE CARD WHITE */
     .stMarkdown p { color: white !important; }
     .card .stMarkdown p, .card p { color: #0B2C4A !important; }
     input, textarea, select { background-color: #FFFFFF !important; color: #000000 !important; border: 2.5px solid #0B2C4A !important; border-radius: 8px !important; font-weight: 700 !important; font-size: 16px !important; }
     div[data-baseweb="select"] > div { background-color: white !important; color: black !important; border: 2.5px solid #0B2C4A !important; }
-    /* BUTTONS - START EXAM GREEN */
     .stButton>button { background-color: #0A9D58 !important; color: white !important; font-size: 19px !important; font-weight: 900 !important; border-radius: 10px; padding: 14px; width: 100%; border: none; box-shadow: 0 4px 10px rgba(0,0,0,0.3); letter-spacing: 1px; text-transform: uppercase; }
     .stButton>button:hover { background-color: #078A4C !important; }
     .timer-box { background-color: #FF0000; color: white !important; padding: 14px; border-radius: 10px; text-align: center; font-size: 24px; font-weight: 900; letter-spacing: 2px; margin: 10px 0; }
@@ -40,9 +32,20 @@ st.markdown("""
     .footer span { color: #FFD700 !important; }
     .instruction-box { background-color: #E8F0FE; padding: 15px; border-radius: 10px; border: 1px solid #0B2C4A; margin-top: 12px; }
     .instruction-box b, .instruction-box li { color: #0B2C4A !important; }
-    .question-card { background-color: white; padding: 18px; border-radius: 10px; margin-top: 12px; border-left: 5px solid #0B2C4A; box-shadow: 0 2px 8px rgba(0,0,0,0.15); }
-    .question-card p { color: #0B2C4A !important; font-weight: 700; }
     .field-label { color: #0B2C4A !important; font-weight: 900 !important; font-size: 15px !important; margin-bottom: 2px; margin-top: 10px; }
+    /* ===== BIG OPTIONS - FIXED ===== */
+    .question-card { background-color: #FFFFFF !important; padding: 26px; border-radius: 14px; margin-top: 12px; border-left: 6px solid #FFD700; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
+    .question-card p { color: #0B2C4A !important; font-weight: 900 !important; font-size: 23px !important; line-height: 1.4; }
+    div[data-testid="stRadio"] { background-color: white !important; padding: 10px; border-radius: 10px; }
+    div[data-testid="stRadio"] label { color: #000000 !important; font-size: 22px !important; font-weight: 800 !important; background-color: #FFFFFF !important; padding: 18px 16px !important; border: 3px solid #0B2C4A !important; border-radius: 14px !important; margin-bottom: 14px !important; width: 100% !important; display: flex !important; align-items: center !important; line-height: 1.4 !important; }
+    div[data-testid="stRadio"] label:hover { background-color: #FFF3CD !important; border-color: #FFD700 !important; }
+    div[data-testid="stRadio"] p { color: #000000 !important; font-weight: 800 !important; font-size: 22px !important; }
+    div[data-testid="stRadio"] > label { background: white !important; border: none !important; color: #0B2C4A !important; }
+    div[data-testid="stRadio"] > label p { color: #0B2C4A !important; font-weight: 900 !important; font-size: 18px !important; }
+    /* Make the radio circle bigger */
+    div[data-testid="stRadio"] input[type="radio"] { transform: scale(1.8); margin-right: 12px !important; }
+    div[data-testid="stCheckbox"] label { color: #0B2C4A !important; }
+    div[data-testid="stCheckbox"] p { color: #0B2C4A !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -221,7 +224,7 @@ else:
             st.rerun()
     q = filtered[st.session_state.current_q]
     st.markdown('<div class="question-card">', unsafe_allow_html=True)
-    st.markdown(f"<p style='font-size:18px;'>Q{st.session_state.current_q+1}. {q['q']}</p>", unsafe_allow_html=True)
+    st.markdown(f"<p>Q{st.session_state.current_q+1}. {q['q']}</p>", unsafe_allow_html=True)
     prev_ans = st.session_state.answers_dict.get(st.session_state.current_q, None)
     options_with_letters = [f"A. {q['options'][0]}", f"B. {q['options'][1]}", f"C. {q['options'][2]}", f"D. {q['options'][3]}"]
     default_idx = None
