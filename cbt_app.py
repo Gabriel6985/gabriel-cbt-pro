@@ -33,7 +33,6 @@ st.markdown("""
     .instruction-box { background-color: #E8F0FE; padding: 15px; border-radius: 10px; border: 1px solid #0B2C4A; margin-top: 12px; }
     .instruction-box b, .instruction-box li { color: #0B2C4A !important; }
     .field-label { color: #0B2C4A !important; font-weight: 900 !important; font-size: 15px !important; margin-bottom: 2px; margin-top: 10px; }
-    /* ===== BIG OPTIONS - FIXED ===== */
     .question-card { background-color: #FFFFFF !important; padding: 26px; border-radius: 14px; margin-top: 12px; border-left: 6px solid #FFD700; box-shadow: 0 4px 15px rgba(0,0,0,0.4); }
     .question-card p { color: #0B2C4A !important; font-weight: 900 !important; font-size: 23px !important; line-height: 1.4; }
     div[data-testid="stRadio"] { background-color: white !important; padding: 10px; border-radius: 10px; }
@@ -42,10 +41,11 @@ st.markdown("""
     div[data-testid="stRadio"] p { color: #000000 !important; font-weight: 800 !important; font-size: 22px !important; }
     div[data-testid="stRadio"] > label { background: white !important; border: none !important; color: #0B2C4A !important; }
     div[data-testid="stRadio"] > label p { color: #0B2C4A !important; font-weight: 900 !important; font-size: 18px !important; }
-    /* Make the radio circle bigger */
     div[data-testid="stRadio"] input[type="radio"] { transform: scale(1.8); margin-right: 12px !important; }
     div[data-testid="stCheckbox"] label { color: #0B2C4A !important; }
     div[data-testid="stCheckbox"] p { color: #0B2C4A !important; }
+    .success-box { background-color: #0A9D58; color: white !important; padding: 20px; border-radius: 12px; text-align: center; font-size: 20px; font-weight: 900; margin-top: 15px; }
+    .success-box p { color: white !important; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -102,18 +102,19 @@ if "student_info" not in st.session_state:
     st.session_state.student_info = {}
 if "start_time" not in st.session_state:
     st.session_state.start_time = None
-if "last_score" not in st.session_state:
-    st.session_state.last_score = None
 if "current_q" not in st.session_state:
     st.session_state.current_q = 0
 if "answers_dict" not in st.session_state:
     st.session_state.answers_dict = {}
+if "submitted_msg" not in st.session_state:
+    st.session_state.submitted_msg = False
 
+# --- ADMIN ONLY - SEES RESULTS + PIE CHART ---
 st.sidebar.title("Admin Panel")
 password = st.sidebar.text_input("Admin Password", type="password")
 is_admin = (password == "admin123")
 if is_admin:
-    st.sidebar.success("Admin Logged In")
+    st.sidebar.success("Admin Logged In - You Can See Results")
     st.sidebar.subheader("Add New Question")
     new_subject = st.sidebar.selectbox("Subject", ALL_SUBJECTS)
     new_q = st.sidebar.text_area("Question")
@@ -130,40 +131,49 @@ if is_admin:
             st.sidebar.success("Question Added!")
         else:
             st.sidebar.error("Fill all fields!")
-    st.sidebar.subheader("All Results")
+    st.sidebar.subheader("All Results (Admin Only)")
     if st.session_state.results:
         df = pd.DataFrame(st.session_state.results)
         st.sidebar.dataframe(df)
         csv = df.to_csv(index=False).encode('utf-8')
         st.sidebar.download_button("Download Results", csv, "ebuntayo_cbt_results.csv", "text/csv")
         st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.subheader("Overall School Performance")
+        st.subheader("Overall School Performance - Admin Only")
         total_correct = int(df['score'].sum())
         total_all = int(df['total'].sum())
         show_pie_chart(total_correct, total_all - total_correct, "Overall Performance")
         st.markdown('</div>', unsafe_allow_html=True)
+    else:
+        st.sidebar.info("No results yet. Students have not submitted.")
 
+# --- STUDENT LOGIN ---
 if not st.session_state.exam_started:
+    # Show success message after submit, then login for next student
+    if st.session_state.submitted_msg:
+        st.markdown("""
+        <div class="success-box">
+            <p>✅ EXAM SUBMITTED SUCCESSFULLY!</p>
+            <p style="font-size:15px; font-weight:700;">Thank you! Your answers have been recorded.<br>Next student can now login.</p>
+        </div>
+        """, unsafe_allow_html=True)
+        st.session_state.submitted_msg = False
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown("<p class='login-title'>STUDENT LOGIN</p>", unsafe_allow_html=True)
     st.markdown("<p class='login-sub'>Enter your details to begin your examination</p>", unsafe_allow_html=True)
-    if st.session_state.last_score is not None:
-        s, t = st.session_state.last_score
-        show_pie_chart(s, t-s, "Your Last Exam Performance")
     st.markdown("<p class='field-label'>FULL NAME *</p>", unsafe_allow_html=True)
-    name = st.text_input("Full Name", label_visibility="collapsed", placeholder="Enter your full name")
+    name = st.text_input("Full Name", label_visibility="collapsed", placeholder="Enter your full name", key="login_name")
     st.markdown("<p class='field-label'>EXAM NUMBER / ADMISSION NO</p>", unsafe_allow_html=True)
-    exam_no = st.text_input("Exam Number", label_visibility="collapsed", placeholder="e.g. EBS/001")
+    exam_no = st.text_input("Exam Number", label_visibility="collapsed", placeholder="e.g. EBS/001", key="login_examno")
     st.markdown("<p class='field-label'>SELECT SUBJECT</p>", unsafe_allow_html=True)
-    subject = st.selectbox("Select Subject", ALL_SUBJECTS, label_visibility="collapsed")
+    subject = st.selectbox("Select Subject", ALL_SUBJECTS, label_visibility="collapsed", key="login_subj")
     st.markdown("<p class='field-label'>SELECT CLASS</p>", unsafe_allow_html=True)
-    class_ = st.selectbox("Select Class", ["JSS 1","JSS 2","JSS 3","SS 1","SS 2","SS 3"], label_visibility="collapsed")
+    class_ = st.selectbox("Select Class", ["JSS 1","JSS 2","JSS 3","SS 1","SS 2","SS 3"], label_visibility="collapsed", key="login_class")
     st.markdown("<p class='field-label'>SELECT TERM</p>", unsafe_allow_html=True)
-    term = st.selectbox("Select Term", ["First Term","Second Term","Third Term"], label_visibility="collapsed")
+    term = st.selectbox("Select Term", ["First Term","Second Term","Third Term"], label_visibility="collapsed", key="login_term")
     st.markdown("<p class='field-label'>EXAM TYPE</p>", unsafe_allow_html=True)
-    exam_type = st.selectbox("Exam Type", ["First Term Exam","Second Term Exam","Third Term Exam","Mock Exam","Promotion Exam","Test / Quiz"], label_visibility="collapsed")
+    exam_type = st.selectbox("Exam Type", ["First Term Exam","Second Term Exam","Third Term Exam","Mock Exam","Promotion Exam","Test / Quiz"], label_visibility="collapsed", key="login_type")
     st.markdown("<p class='field-label'>SELECT TIME</p>", unsafe_allow_html=True)
-    exam_time = st.selectbox("Select Time", ["10 Minutes","20 Minutes","30 Minutes","1 Hour"], label_visibility="collapsed")
+    exam_time = st.selectbox("Select Time", ["10 Minutes","20 Minutes","30 Minutes","1 Hour"], label_visibility="collapsed", key="login_time")
     st.markdown("""
     <div class="instruction-box">
         <b>EXAMINATION INSTRUCTIONS:</b>
@@ -174,6 +184,7 @@ if not st.session_state.exam_started:
             <li>Exam will submit AUTOMATICALLY when time is up</li>
             <li>Click SUBMIT EXAM when you finish</li>
             <li>Malpractice is NOT allowed</li>
+            <li>Your result will NOT be shown to you - Only Admin will see it</li>
         </ul>
     </div>
     """, unsafe_allow_html=True)
@@ -199,8 +210,16 @@ else:
     remaining = end_time - datetime.now()
     total_seconds = int(remaining.total_seconds())
     if total_seconds <= 0:
-        st.error("TIME UP! Submitting automatically...")
+        # TIME UP - Save secretly, go back to login, NO result shown
+        filtered_tmp = [q for q in st.session_state.questions if q.get("subject") == info["subject"]]
+        if not filtered_tmp:
+            filtered_tmp = st.session_state.questions
+        score_tmp = sum(1 for i, qq in enumerate(filtered_tmp) if st.session_state.answers_dict.get(i) == qq["answer"])
+        st.session_state.results.append({"name": info["name"], "exam_no": info.get("exam_no",""), "class": info["class"], "subject": info["subject"], "term": info["term"], "exam_type": info.get("exam_type",""), "score": score_tmp, "total": len(filtered_tmp), "school": SCHOOL_NAME, "date": datetime.now().strftime("%Y-%m-%d %H:%M")})
         st.session_state.exam_started = False
+        st.session_state.submitted_msg = True
+        st.session_state.current_q = 0
+        st.session_state.answers_dict = {}
         st.rerun()
     else:
         mins_left = total_seconds // 60
@@ -251,18 +270,11 @@ else:
                 st.rerun()
     st.write("---")
     if st.button("SUBMIT EXAM"):
+        # Save secretly, NO score shown, go back to login for next student
         score = sum(1 for i, qq in enumerate(filtered) if st.session_state.answers_dict.get(i) == qq["answer"])
-        wrong = total_q - score
-        st.success(f"{info['name']}, your score is {score}/{total_q}")
-        st.balloons()
-        st.session_state.last_score = (score, total_q)
-        st.session_state.results.append({"name": info["name"], "exam_no": info.get("exam_no",""), "class": info["class"], "subject": info["subject"], "term": info["term"], "exam_type": info.get("exam_type",""), "score": score, "total": total_q, "school": SCHOOL_NAME, "date": datetime.now().strftime("%Y-%m-%d %H:%M")})
-        show_pie_chart(score, wrong, "Your Exam Performance")
-        pct = (score/total_q*100) if total_q>0 else 0
-        grade = "A - Excellent!" if pct>=70 else "B - Very Good!" if pct>=60 else "C - Good" if pct>=50 else "D - Fair" if pct>=40 else "F - Try Again"
-        st.info(f"Percentage: {pct:.1f}% | Grade: {grade}")
-    if st.button("Take Another Exam"):
+        st.session_state.results.append({"name": info["name"], "exam_no": info.get("exam_no",""), "class": info["class"], "subject": info["subject"], "term": info["term"], "exam_type": info.get("exam_type",""), "score": score, "total": len(filtered), "school": SCHOOL_NAME, "date": datetime.now().strftime("%Y-%m-%d %H:%M")})
         st.session_state.exam_started = False
+        st.session_state.submitted_msg = True
         st.session_state.current_q = 0
         st.session_state.answers_dict = {}
         st.rerun()
