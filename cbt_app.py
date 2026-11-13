@@ -46,6 +46,9 @@ st.markdown("""
     div[data-testid="stCheckbox"] p { color: #0B2C4A !important; }
     .success-box { background-color: #0A9D58; color: white !important; padding: 20px; border-radius: 12px; text-align: center; font-size: 20px; font-weight: 900; margin-top: 15px; }
     .success-box p { color: white !important; }
+    .student-card { background-color: #FFFFFF !important; padding: 20px; border-radius: 12px; margin-top: 15px; border: 2px solid #0B2C4A; }
+    .student-name { color: #0B2C4A !important; font-size: 22px !important; font-weight: 900 !important; text-align: center; text-transform: uppercase; margin: 0; }
+    .student-detail { color: #333 !important; text-align: center; font-weight: 700; font-size: 14px; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -61,13 +64,16 @@ DEFAULT_QUESTIONS = [
     {"q": "What is the capital of Nigeria?", "options": ["Lagos","Abuja","Kano","Ibadan"], "answer": "Abuja", "subject": "Social Studies"},
 ]
 
-def show_pie_chart(correct, wrong, title):
+def show_pie_chart(correct, wrong, title, student_name=""):
     total = correct + wrong
     if total == 0:
         st.write("No data yet")
         return
     pct_correct = int((correct/total)*100)
     pct_wrong = 100 - pct_correct
+    # Title shows STUDENT NAME
+    if student_name:
+        st.markdown(f"<p class='student-name'>{student_name}</p>", unsafe_allow_html=True)
     st.markdown(f"<h3 style='text-align:center; color:#0B2C4A;'>{title}</h3>", unsafe_allow_html=True)
     st.markdown(f"""
     <div style="display:flex; justify-content:center;">
@@ -109,7 +115,7 @@ if "answers_dict" not in st.session_state:
 if "submitted_msg" not in st.session_state:
     st.session_state.submitted_msg = False
 
-# --- ADMIN ONLY - SEES RESULTS + PIE CHART ---
+# --- ADMIN PANEL ---
 st.sidebar.title("Admin Panel")
 password = st.sidebar.text_input("Admin Password", type="password")
 is_admin = (password == "admin123")
@@ -137,18 +143,59 @@ if is_admin:
         st.sidebar.dataframe(df)
         csv = df.to_csv(index=False).encode('utf-8')
         st.sidebar.download_button("Download Results", csv, "ebuntayo_cbt_results.csv", "text/csv")
-        st.markdown('<div class="card">', unsafe_allow_html=True)
-        st.subheader("Overall School Performance - Admin Only")
-        total_correct = int(df['score'].sum())
-        total_all = int(df['total'].sum())
-        show_pie_chart(total_correct, total_all - total_correct, "Overall Performance")
-        st.markdown('</div>', unsafe_allow_html=True)
     else:
-        st.sidebar.info("No results yet. Students have not submitted.")
+        st.sidebar.info("No results yet.")
+
+# --- ADMIN REVIEW SECTION - ONLY ADMIN SEES THIS ---
+if is_admin and st.session_state.results:
+    st.markdown('<div class="card">', unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align:center; color:#0B2C4A;'>🔍 ADMIN REVIEW - STUDENT PERFORMANCE</h2>", unsafe_allow_html=True)
+    st.markdown("<p style='text-align:center; color:#444;'>Only Admin can see this. Students cannot see their results.</p>", unsafe_allow_html=True)
+    df = pd.DataFrame(st.session_state.results)
+    # OVERALL
+    total_correct = int(df['score'].sum())
+    total_all = int(df['total'].sum())
+    st.markdown("<h3 style='text-align:center;'>📊 OVERALL SCHOOL PERFORMANCE</h3>", unsafe_allow_html=True)
+    show_pie_chart(total_correct, total_all - total_correct, "All Students Combined")
+    st.markdown("---", unsafe_allow_html=True)
+    # REVIEW - SELECT ONE STUDENT
+    st.markdown("<h3>👤 REVIEW ONE STUDENT</h3>", unsafe_allow_html=True)
+    # Create label like "Gabriel - Computer Studies - 2026-11-13"
+    df['label'] = df.apply(lambda r: f"{r['name']} - {r['subject']} - {r['class']} - {r.get('date','')}", axis=1)
+    selected_label = st.selectbox("Select Student to Review", df['label'].tolist())
+    # Find that student
+    selected = df[df['label'] == selected_label].iloc[0]
+    score_sel = int(selected['score'])
+    total_sel = int(selected['total'])
+    wrong_sel = total_sel - score_sel
+    pct_sel = (score_sel/total_sel*100) if total_sel>0 else 0
+    grade_sel = "A - Excellent!" if pct_sel>=70 else "B - Very Good!" if pct_sel>=60 else "C - Good" if pct_sel>=50 else "D - Fair" if pct_sel>=40 else "F - Try Again"
+    st.markdown(f"""
+    <div class="student-card">
+        <p class="student-name">{selected['name']}</p>
+        <p class="student-detail">Exam No: {selected.get('exam_no','-')} | Class: {selected['class']} | Subject: {selected['subject']}<br>Term: {selected['term']} | Exam Type: {selected.get('exam_type','-')} | Date: {selected.get('date','-')}<br>Score: {score_sel}/{total_sel} | Percentage: {pct_sel:.1f}% | Grade: {grade_sel}</p>
+    </div>
+    """, unsafe_allow_html=True)
+    # Pie chart with STUDENT NAME on top
+    show_pie_chart(score_sel, wrong_sel, f"{selected['subject']} Performance", student_name=f"{selected['name']}'s Performance")
+    st.markdown("---", unsafe_allow_html=True)
+    # ALL STUDENTS - EACH WITH OWN PIE CHART + NAME
+    st.markdown("<h3>📋 ALL STUDENTS - EACH PIE CHART WITH NAME</h3>", unsafe_allow_html=True)
+    for idx, row in df.iterrows():
+        s = int(row['score']); t = int(row['total']); w = t - s
+        pct = (s/t*100) if t>0 else 0
+        st.markdown(f"""
+        <div class="student-card">
+            <p class="student-name">{row['name']}</p>
+            <p class="student-detail">{row['subject']} | {row['class']} | {row['term']} | Score: {s}/{t} | {pct:.1f}% | {row.get('date','')}</p>
+        </div>
+        """, unsafe_allow_html=True)
+        show_pie_chart(s, w, f"{row['subject']} - {row['class']}", student_name=f"{row['name']}")
+        st.markdown("---", unsafe_allow_html=True)
+    st.markdown('</div>', unsafe_allow_html=True)
 
 # --- STUDENT LOGIN ---
 if not st.session_state.exam_started:
-    # Show success message after submit, then login for next student
     if st.session_state.submitted_msg:
         st.markdown("""
         <div class="success-box">
@@ -210,7 +257,6 @@ else:
     remaining = end_time - datetime.now()
     total_seconds = int(remaining.total_seconds())
     if total_seconds <= 0:
-        # TIME UP - Save secretly, go back to login, NO result shown
         filtered_tmp = [q for q in st.session_state.questions if q.get("subject") == info["subject"]]
         if not filtered_tmp:
             filtered_tmp = st.session_state.questions
@@ -270,7 +316,6 @@ else:
                 st.rerun()
     st.write("---")
     if st.button("SUBMIT EXAM"):
-        # Save secretly, NO score shown, go back to login for next student
         score = sum(1 for i, qq in enumerate(filtered) if st.session_state.answers_dict.get(i) == qq["answer"])
         st.session_state.results.append({"name": info["name"], "exam_no": info.get("exam_no",""), "class": info["class"], "subject": info["subject"], "term": info["term"], "exam_type": info.get("exam_type",""), "score": score, "total": len(filtered), "school": SCHOOL_NAME, "date": datetime.now().strftime("%Y-%m-%d %H:%M")})
         st.session_state.exam_started = False
