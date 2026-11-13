@@ -42,6 +42,7 @@ st.markdown(CSS, unsafe_allow_html=True)
 ALL_SUBJECTS = ['Mathematics','English Language','Physics','Chemistry','Biology','Economics','Government','Literature in English','CRS','Geography','Commerce','Financial Accounting','Agricultural Science','Computer Studies / ICT','Social Studies','Basic Science','Civic Education','History','Business Studies']
 ALL_CLASSES = ['JSS 1','JSS 2','JSS 3','SS 1','SS 2','SS 3']
 
+# VERSION 2 - ALL MCQ ONLY - NO FILL IN BLANK
 DEFAULT_QUESTIONS = [
     {'q': 'What is the full meaning of ICT?', 'options': ['Internet and Computer Technology','Information and Communication Technology','Information and Computer Technology','Internet Communication Tool'], 'answer': 'Information and Communication Technology', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'ICT Basics', 'type': 'Objective', 'passage': ''},
     {'q': 'Which of these is an input device?', 'options': ['Monitor','Printer','Keyboard','Speaker'], 'answer': 'Keyboard', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Devices', 'type': 'Objective', 'passage': ''},
@@ -49,12 +50,13 @@ DEFAULT_QUESTIONS = [
     {'q': 'Which of these is used to store data permanently?', 'options': ['RAM','Hard Disk','Cache','ROM'], 'answer': 'Hard Disk', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Memory', 'type': 'Objective', 'passage': ''},
     {'q': 'Which program is used to browse the internet?', 'options': ['Microsoft Word','Google Chrome','Microsoft Excel','Paint'], 'answer': 'Google Chrome', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Internet', 'type': 'Objective', 'passage': ''},
     {'q': 'What is the full meaning of RAM?', 'options': ['Random Access Memory','Read Access Memory','Rapid Access Memory','Random And Memory'], 'answer': 'Random Access Memory', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Memory', 'type': 'Objective', 'passage': ''},
-    {'q': 'A computer is an electronic device. True or False?', 'options': ['True','False','Maybe','None of the above'], 'answer': 'True', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Basics', 'type': 'Objective', 'passage': ''},
     {'q': 'Which of these is an output device?', 'options': ['Keyboard','Mouse','Monitor','Scanner'], 'answer': 'Monitor', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Devices', 'type': 'Objective', 'passage': ''},
     {'q': 'If 3x + 5 = 20, what is the value of 2x - 1?', 'options': ['7','9','11','15'], 'answer': '9', 'subject': 'Mathematics', 'class': 'SS 2', 'term': 'First Term', 'topic': 'Algebra', 'type': 'Objective', 'passage': ''},
     {'q': 'What is 2 + 2?', 'options': ['3','4','5','6'], 'answer': '4', 'subject': 'Mathematics', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Addition', 'type': 'Objective', 'passage': ''},
     {'q': 'What is 10 x 5?', 'options': ['15','50','45','55'], 'answer': '50', 'subject': 'Mathematics', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Multiplication', 'type': 'Objective', 'passage': ''},
     {'q': 'What is the capital of Nigeria?', 'options': ['Lagos','Abuja','Kano','Ibadan'], 'answer': 'Abuja', 'subject': 'Social Studies', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Capital', 'type': 'Objective', 'passage': ''},
+    {'q': 'Which arm of government makes laws?', 'options': ['Executive','Legislature','Judiciary','Police'], 'answer': 'Legislature', 'subject': 'Government', 'class': 'SS 2', 'term': 'First Term', 'topic': 'Government', 'type': 'Objective', 'passage': ''},
+    {'q': 'Who is the head of the Executive arm in Nigeria?', 'options': ['Senate President','Chief Justice','President','Governor'], 'answer': 'President', 'subject': 'Government', 'class': 'SS 2', 'term': 'First Term', 'topic': 'Government', 'type': 'Objective', 'passage': ''},
 ]
 
 def show_pie_chart(correct, wrong, title, student_name=''):
@@ -72,7 +74,24 @@ def show_pie_chart(correct, wrong, title, student_name=''):
 
 st.markdown('<div class="jamb-header"><h1>EBUNTAYO SECONDARY SCHOOL</h1><p>FIRST TERM CBT EXAMINATION | GABRIEL CBT PRO</p></div>', unsafe_allow_html=True)
 
+# FORCE FRESH - If old cached questions have fill-in-blank, replace them
 if 'questions' not in st.session_state: st.session_state.questions = DEFAULT_QUESTIONS.copy()
+if 'app_version' not in st.session_state: st.session_state.app_version = 'v2'
+if st.session_state.app_version != 'v2':
+    st.session_state.questions = DEFAULT_QUESTIONS.copy()
+    st.session_state.app_version = 'v2'
+# Auto-fix any old question that has no options - convert RAM fill blank to MCQ
+for qq in st.session_state.questions:
+    if not qq.get('options') or len(qq.get('options')) < 2:
+        if 'RAM' in qq.get('q',''):
+            qq['options'] = ['Random Access Memory','Read Access Memory','Rapid Access Memory','Random And Memory']
+            qq['answer'] = 'Random Access Memory'
+            qq['type'] = 'Objective'
+        else:
+            qq['options'] = ['True','False','Maybe','None of the above']
+            qq['answer'] = qq.get('answer','True')
+            qq['type'] = 'Objective'
+
 if 'results' not in st.session_state: st.session_state.results = []
 if 'exam_started' not in st.session_state: st.session_state.exam_started = False
 if 'student_info' not in st.session_state: st.session_state.student_info = {}
@@ -85,8 +104,24 @@ if 'profile_ok' not in st.session_state: st.session_state.profile_ok = False
 if 'shuffled_q' not in st.session_state: st.session_state.shuffled_q = []
 if 'active_students' not in st.session_state: st.session_state.active_students = []
 
-st.markdown('<p class="select-role">SELECT ROLE</p>', unsafe_allow_html=True)
-role = st.radio('SELECT ROLE', ['STUDENT - WRITE EXAM', 'TEACHER - SET QUESTIONS', 'ADMIN - MONITOR & RESULTS'], horizontal=True, label_visibility='collapsed')
+# IF STUDENT IS IN EXAM, HIDE SELECT ROLE - SHOW ONLY EXAM + LOGOUT
+# IF NOT IN EXAM, SHOW SELECT ROLE + STUDENT LOGIN FIRST LIKE BEFORE
+is_in_exam = st.session_state.exam_started or st.session_state.profile_ok
+
+if not is_in_exam:
+    st.markdown('<p class="select-role">SELECT ROLE</p>', unsafe_allow_html=True)
+    role = st.radio('SELECT ROLE', ['STUDENT - WRITE EXAM', 'TEACHER - SET QUESTIONS', 'ADMIN - MONITOR & RESULTS'], horizontal=True, label_visibility='collapsed', key='role_select')
+else:
+    role = 'STUDENT - WRITE EXAM'
+    # LOGOUT BUTTON - To go back to Login
+    if st.button('LOGOUT / BACK TO LOGIN - End This Exam'):
+        st.session_state.exam_started = False
+        st.session_state.profile_ok = False
+        st.session_state.answers_dict = {}
+        st.session_state.flagged = set()
+        st.session_state.current_q = 0
+        st.session_state.active_students = []
+        st.rerun()
 
 if role.startswith('TEACHER'):
     st.markdown('<div class="card">', unsafe_allow_html=True)
@@ -97,7 +132,6 @@ if role.startswith('TEACHER'):
         st.success('Welcome Teacher! You can set YOUR OWN questions here.')
         st.markdown('<div class="danger-box">', unsafe_allow_html=True)
         st.markdown('<p style="color:#FF0000 !important;font-weight:900;text-align:center;">START FRESH - DELETE SAMPLE QUESTIONS</p>', unsafe_allow_html=True)
-        st.markdown('<p style="color:#0B2C4A !important;text-align:center;font-weight:700;">My sample questions are only for testing. Click below to delete them all and add only YOUR school questions.</p>', unsafe_allow_html=True)
         if st.button('DELETE ALL SAMPLE QUESTIONS - START FRESH'):
             st.session_state.questions = []
             st.success('Deleted! Question Bank is now 0. Add only YOUR questions below.')
@@ -151,7 +185,7 @@ if role.startswith('TEACHER'):
         st.subheader('3. QUESTION BANK - YOUR QUESTIONS')
         st.write('Total Questions in Bank: ' + str(len(st.session_state.questions)))
         if len(st.session_state.questions) == 0:
-            st.warning('Bank is empty. Add your own questions above. Students will see NO questions until you add.')
+            st.warning('Bank is empty. Add your own questions above.')
         else:
             st.dataframe(pd.DataFrame(st.session_state.questions))
             st.markdown('<p class="field-label">DELETE ONE QUESTION</p>', unsafe_allow_html=True)
@@ -188,7 +222,15 @@ if role.startswith('ADMIN'):
                 st.info('No active exam')
         if st.button('Reset Frozen Session'):
             st.session_state.exam_started = False
-            st.success('Reset Done')
+            st.session_state.profile_ok = False
+            st.success('Reset Done - Student Login will show again')
+            st.rerun()
+        if st.button('CLEAR OLD DATA - Fix Old Questions'):
+            st.session_state.questions = DEFAULT_QUESTIONS.copy()
+            st.session_state.exam_started = False
+            st.session_state.profile_ok = False
+            st.success('Cleared! Fresh questions loaded.')
+            st.rerun()
         if st.session_state.results:
             df = pd.DataFrame(st.session_state.results)
             st.markdown('---')
