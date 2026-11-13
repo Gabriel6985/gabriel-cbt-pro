@@ -11,15 +11,18 @@ EXAM_PIN = 'EBS2026'
 
 CSS = '<style>'
 CSS += '.stApp{background-color:#F2F2F2 !important;}'
-CSS += '.jamb-header{background-color:#0B2C4A;color:white;padding:12px 16px;border-radius:8px 8px 0 0;border:2px solid #0B2C4A;}'
-CSS += '.jamb-header h1{color:white !important;font-size:24px !important;font-weight:900 !important;margin:0;text-align:center;text-transform:uppercase;}'
-CSS += '.jamb-header p{color:#FFD700 !important;text-align:center;font-size:13px;font-weight:800;margin:2px 0 0 0;}'
-CSS += '.student-bar{background-color:#FFFFFF;border:2px solid #0B2C4A;border-top:none;padding:10px 14px;color:#0B2C4A !important;font-weight:800;font-size:14px;}'
-CSS += '.card{background-color:#FFFFFF !important;padding:22px;border-radius:12px;margin-top:14px;border-top:6px solid #FFD700;}'
-CSS += '.login-title{color:#0B2C4A !important;font-size:26px !important;font-weight:900 !important;text-align:center;text-transform:uppercase;margin:0;}'
-CSS += 'label{font-weight:800 !important;color:#0B2C4A !important;}'
-CSS += 'input,textarea,select{background-color:#fff !important;color:#000 !important;border:2.5px solid #0B2C4A !important;border-radius:8px !important;font-weight:700 !important;}'
-CSS += '.stButton>button{background-color:#0A9D58 !important;color:white !important;font-weight:900 !important;border-radius:8px;padding:10px;width:100%;text-transform:uppercase;}'
+CSS += '.jamb-header{background-color:#0B2C4A;color:white;padding:18px 10px;border-radius:8px 8px 0 0;border:4px solid #FFD700;}'
+CSS += '.jamb-header h1{color:white !important;font-size:42px !important;font-weight:900 !important;margin:0;text-align:center;text-transform:uppercase;letter-spacing:1px;-webkit-text-stroke:1.5px #FFD700;text-shadow:4px 4px 0px #000, 6px 6px 12px rgba(0,0,0,0.8);font-family:Arial Black, Arial, sans-serif !important;line-height:1.1;}'
+CSS += '.jamb-header p{color:#FFD700 !important;text-align:center;font-size:15px;font-weight:900;margin:8px 0 0 0;letter-spacing:3px;}'
+CSS += '.student-bar{background-color:#FFFFFF;border:2px solid #0B2C4A;border-top:none;padding:10px 14px;color:#0B2C4A !important;font-weight:900;font-size:15px;}'
+CSS += '.card{background-color:#FFFFFF !important;padding:24px;border-radius:12px;margin-top:14px;border-top:6px solid #FFD700;}'
+CSS += '.login-title{color:#0B2C4A !important;font-size:30px !important;font-weight:900 !important;text-align:center;text-transform:uppercase;margin:0;font-family:Arial Black, Arial, sans-serif;}'
+CSS += '.login-sub{text-align:center;color:#444 !important;font-weight:700;font-size:14px;}'
+CSS += '.field-label{color:#0B2C4A !important;font-weight:900 !important;font-size:18px !important;text-transform:uppercase;margin-top:14px;margin-bottom:2px;letter-spacing:0.5px;}'
+CSS += '.select-role{color:#0B2C4A !important;font-weight:900 !important;font-size:20px !important;text-transform:uppercase;letter-spacing:1px;margin:0;}'
+CSS += 'label{font-weight:900 !important;color:#0B2C4A !important;font-size:16px !important;}'
+CSS += 'input,textarea,select{background-color:#fff !important;color:#000 !important;border:2.5px solid #0B2C4A !important;border-radius:8px !important;font-weight:800 !important;font-size:16px !important;}'
+CSS += '.stButton>button{background-color:#0A9D58 !important;color:white !important;font-weight:900 !important;border-radius:8px;padding:12px;width:100%;text-transform:uppercase;font-size:18px !important;}'
 CSS += '.footer{text-align:center;margin-top:20px;padding:14px;background-color:#0B2C4A;border-radius:8px;color:white !important;font-weight:700;}'
 CSS += '.footer span{color:#FFD700 !important;}'
 CSS += 'div[data-testid="stRadio"] label{color:#000 !important;font-size:21px !important;font-weight:800 !important;background:#fff !important;padding:14px 12px !important;border:2px solid #ddd !important;border-radius:8px !important;margin-bottom:10px !important;width:100% !important;display:flex !important;align-items:center !important;}'
@@ -60,7 +63,7 @@ def show_pie_chart(correct, wrong, title, student_name=''):
     st.markdown(pie_html, unsafe_allow_html=True)
     st.bar_chart(pd.DataFrame({'Result': ['Correct','Wrong'], 'Count': [correct, wrong]}).set_index('Result'))
 
-st.markdown('<div class="jamb-header"><h1>EBUNTAYO SECONDARY SCHOOL - FIRST TERM CBT EXAMINATION</h1><p>GABRIEL CBT PRO | JAMB / WAEC STANDARD</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="jamb-header"><h1>EBUNTAYO SECONDARY SCHOOL</h1><p>FIRST TERM CBT EXAMINATION | GABRIEL CBT PRO</p></div>', unsafe_allow_html=True)
 
 if 'questions' not in st.session_state: st.session_state.questions = DEFAULT_QUESTIONS.copy()
 if 'results' not in st.session_state: st.session_state.results = []
@@ -75,24 +78,41 @@ if 'profile_ok' not in st.session_state: st.session_state.profile_ok = False
 if 'shuffled_q' not in st.session_state: st.session_state.shuffled_q = []
 if 'active_students' not in st.session_state: st.session_state.active_students = []
 
-role = st.radio('WHO ARE YOU?', ['Student - Write Exam', 'Teacher - Set Questions', 'Admin - Monitor & Results'], horizontal=True)
+st.markdown('<p class="select-role">SELECT ROLE</p>', unsafe_allow_html=True)
+role = st.radio('SELECT ROLE', ['STUDENT - WRITE EXAM', 'TEACHER - SET QUESTIONS', 'ADMIN - MONITOR & RESULTS'], horizontal=True, label_visibility='collapsed')
 
-if role.startswith('Teacher'):
+if role.startswith('TEACHER'):
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown('<p class="login-title">TEACHER LOGIN</p>', unsafe_allow_html=True)
-    tp = st.text_input('Teacher Password', type='password')
+    st.markdown('<p class="field-label">TEACHER PASSWORD</p>', unsafe_allow_html=True)
+    tp = st.text_input('TEACHER PASSWORD', type='password', label_visibility='collapsed')
     if tp == TEACHER_PASS:
         st.success('Welcome Teacher!')
-        q_type = st.selectbox('Question Type', ['Objective','True/False','Fill-in-blank','Theory/Essay'])
-        tq_subj = st.selectbox('Subject', ALL_SUBJECTS, key='t_subj')
-        tq_class = st.selectbox('Class', ALL_CLASSES, key='t_class')
-        tq_term = st.selectbox('Term', ['First Term','Second Term','Third Term'], key='t_term')
-        tq_topic = st.text_input('Topic')
-        tq_passage = st.text_area('Passage (Optional)')
-        tq_q = st.text_area('Question')
+        st.markdown('<p class="field-label">QUESTION TYPE</p>', unsafe_allow_html=True)
+        q_type = st.selectbox('QUESTION TYPE', ['Objective','True/False','Fill-in-blank','Theory/Essay'], label_visibility='collapsed')
+        st.markdown('<p class="field-label">SUBJECT</p>', unsafe_allow_html=True)
+        tq_subj = st.selectbox('SUBJECT', ALL_SUBJECTS, key='t_subj', label_visibility='collapsed')
+        st.markdown('<p class="field-label">CLASS</p>', unsafe_allow_html=True)
+        tq_class = st.selectbox('CLASS', ALL_CLASSES, key='t_class', label_visibility='collapsed')
+        st.markdown('<p class="field-label">TERM</p>', unsafe_allow_html=True)
+        tq_term = st.selectbox('TERM', ['First Term','Second Term','Third Term'], key='t_term', label_visibility='collapsed')
+        st.markdown('<p class="field-label">TOPIC</p>', unsafe_allow_html=True)
+        tq_topic = st.text_input('TOPIC', label_visibility='collapsed')
+        st.markdown('<p class="field-label">PASSAGE (OPTIONAL)</p>', unsafe_allow_html=True)
+        tq_passage = st.text_area('PASSAGE', label_visibility='collapsed')
+        st.markdown('<p class="field-label">QUESTION</p>', unsafe_allow_html=True)
+        tq_q = st.text_area('QUESTION', label_visibility='collapsed')
         if q_type == 'Objective':
-            o1 = st.text_input('Option A'); o2 = st.text_input('Option B'); o3 = st.text_input('Option C'); o4 = st.text_input('Option D')
-            corr = st.selectbox('Correct', ['Option A','Option B','Option C','Option D'])
+            st.markdown('<p class="field-label">OPTION A</p>', unsafe_allow_html=True)
+            o1 = st.text_input('OPTION A', label_visibility='collapsed')
+            st.markdown('<p class="field-label">OPTION B</p>', unsafe_allow_html=True)
+            o2 = st.text_input('OPTION B', label_visibility='collapsed')
+            st.markdown('<p class="field-label">OPTION C</p>', unsafe_allow_html=True)
+            o3 = st.text_input('OPTION C', label_visibility='collapsed')
+            st.markdown('<p class="field-label">OPTION D</p>', unsafe_allow_html=True)
+            o4 = st.text_input('OPTION D', label_visibility='collapsed')
+            st.markdown('<p class="field-label">CORRECT ANSWER</p>', unsafe_allow_html=True)
+            corr = st.selectbox('CORRECT', ['Option A','Option B','Option C','Option D'], label_visibility='collapsed')
             if st.button('Add Objective'):
                 opts = [o1,o2,o3,o4]
                 ans = opts[['Option A','Option B','Option C','Option D'].index(corr)]
@@ -100,13 +120,15 @@ if role.startswith('Teacher'):
                     st.session_state.questions.append({'q': tq_q, 'options': opts, 'answer': ans, 'subject': tq_subj, 'class': tq_class, 'term': tq_term, 'topic': tq_topic, 'type': 'Objective', 'passage': tq_passage})
                     st.success('Added!')
         elif q_type == 'True/False':
-            corr2 = st.selectbox('Correct', ['True','False'])
+            st.markdown('<p class="field-label">CORRECT ANSWER</p>', unsafe_allow_html=True)
+            corr2 = st.selectbox('CORRECT', ['True','False'], label_visibility='collapsed')
             if st.button('Add True/False'):
                 if tq_q:
                     st.session_state.questions.append({'q': tq_q, 'options': ['True','False'], 'answer': corr2, 'subject': tq_subj, 'class': tq_class, 'term': tq_term, 'topic': tq_topic, 'type': 'True/False', 'passage': tq_passage})
                     st.success('Added!')
         elif q_type == 'Fill-in-blank':
-            ans_fill = st.text_input('Correct Answer')
+            st.markdown('<p class="field-label">CORRECT ANSWER</p>', unsafe_allow_html=True)
+            ans_fill = st.text_input('CORRECT ANSWER', label_visibility='collapsed')
             if st.button('Add Fill-in-blank'):
                 if tq_q:
                     st.session_state.questions.append({'q': tq_q, 'options': [], 'answer': ans_fill, 'subject': tq_subj, 'class': tq_class, 'term': tq_term, 'topic': tq_topic, 'type': 'Fill-in-blank', 'passage': tq_passage})
@@ -138,10 +160,11 @@ if role.startswith('Teacher'):
         st.error('Wrong Password')
     st.markdown('</div>', unsafe_allow_html=True)
 
-if role.startswith('Admin'):
+if role.startswith('ADMIN'):
     st.markdown('<div class="card">', unsafe_allow_html=True)
     st.markdown('<p class="login-title">ADMIN LOGIN</p>', unsafe_allow_html=True)
-    ap = st.text_input('Admin Password', type='password')
+    st.markdown('<p class="field-label">ADMIN PASSWORD</p>', unsafe_allow_html=True)
+    ap = st.text_input('ADMIN PASSWORD', type='password', label_visibility='collapsed')
     if ap == ADMIN_PASS:
         st.success('Admin Logged In')
         st.subheader('LIVE MONITOR')
@@ -150,7 +173,8 @@ if role.startswith('Admin'):
         else:
             st.info('No student writing now.')
         st.subheader('Session Recovery')
-        extra = st.selectbox('Add Extra Time', ['+5 Minutes','+10 Minutes','+15 Minutes','+30 Minutes'])
+        st.markdown('<p class="field-label">ADD EXTRA TIME</p>', unsafe_allow_html=True)
+        extra = st.selectbox('ADD EXTRA TIME', ['+5 Minutes','+10 Minutes','+15 Minutes','+30 Minutes'], label_visibility='collapsed')
         if st.button('Add Extra Time'):
             if st.session_state.start_time:
                 st.session_state.start_time += timedelta(minutes=int(extra.split()[0].replace('+','')))
@@ -169,7 +193,8 @@ if role.startswith('Admin'):
             st.download_button('Download Results CSV', csv, 'ebuntayo_results.csv', 'text/csv')
             show_pie_chart(int(df['score'].sum()), int(df['total'].sum())-int(df['score'].sum()), 'Overall Performance')
             df['label'] = df.apply(lambda r: str(r['name']) + ' - ' + str(r['subject']) + ' - ' + str(r['class']), axis=1)
-            sel = st.selectbox('Select Student to Review', df['label'].tolist())
+            st.markdown('<p class="field-label">SELECT STUDENT TO REVIEW</p>', unsafe_allow_html=True)
+            sel = st.selectbox('SELECT STUDENT', df['label'].tolist(), label_visibility='collapsed')
             srow = df[df['label']==sel].iloc[0]
             sc = int(srow['score']); tt = int(srow['total'])
             st.markdown('<div class="student-card"><p class="student-name">' + str(srow['name']) + '</p><p class="student-detail">' + str(srow['subject']) + ' | ' + str(srow['class']) + ' | ' + str(sc) + '/' + str(tt) + '</p></div>', unsafe_allow_html=True)
@@ -186,32 +211,39 @@ if role.startswith('Admin'):
         st.error('Wrong Password')
     st.markdown('</div>', unsafe_allow_html=True)
 
-if role.startswith('Student'):
+if role.startswith('STUDENT'):
     if not st.session_state.exam_started and not st.session_state.profile_ok:
         if st.session_state.submitted_msg:
             st.markdown('<div class="success-box"><p>EXAM SUBMITTED SUCCESSFULLY!</p><p style="font-size:15px;">Next student can login.</p></div>', unsafe_allow_html=True)
             st.session_state.submitted_msg = False
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.markdown('<p class="login-title">STUDENT LOGIN</p>', unsafe_allow_html=True)
-        name = st.text_input('Full Name *', placeholder='e.g. Adebayo, Chinedu', key='s_name')
-        exam_no = st.text_input('Reg No / Admission No *', placeholder='e.g. SMSS/2026/0412', key='s_no')
-        pin = st.text_input('Exam PIN *', type='password', placeholder='Ask teacher', key='s_pin')
-        subject = st.selectbox('Select Subject', ALL_SUBJECTS, key='s_subj')
-        class_ = st.selectbox('Select Class', ALL_CLASSES, key='s_class')
-        term = st.selectbox('Select Term', ['First Term','Second Term','Third Term'], key='s_term')
-        exam_type = st.selectbox('Exam Type', ['First Term Exam','Second Term Exam','Third Term Exam','Mock Exam','Promotion Exam','Test / Quiz'], key='s_type')
-        exam_time = st.selectbox('Select Time', ['10 Minutes','20 Minutes','30 Minutes','1 Hour'], key='s_time')
+        st.markdown('<p class="login-sub">Secure Login - Full Name + Exam PIN</p>', unsafe_allow_html=True)
+        st.markdown('<p class="field-label">FULL NAME *</p>', unsafe_allow_html=True)
+        name = st.text_input('FULL NAME', placeholder='Enter your full name', key='s_name', label_visibility='collapsed')
+        st.markdown('<p class="field-label">EXAM PIN *</p>', unsafe_allow_html=True)
+        pin = st.text_input('EXAM PIN', type='password', placeholder='Ask teacher for PIN', key='s_pin', label_visibility='collapsed')
+        st.markdown('<p class="field-label">SELECT SUBJECT</p>', unsafe_allow_html=True)
+        subject = st.selectbox('SELECT SUBJECT', ALL_SUBJECTS, key='s_subj', label_visibility='collapsed')
+        st.markdown('<p class="field-label">SELECT CLASS</p>', unsafe_allow_html=True)
+        class_ = st.selectbox('SELECT CLASS', ALL_CLASSES, key='s_class', label_visibility='collapsed')
+        st.markdown('<p class="field-label">SELECT TERM</p>', unsafe_allow_html=True)
+        term = st.selectbox('SELECT TERM', ['First Term','Second Term','Third Term'], key='s_term', label_visibility='collapsed')
+        st.markdown('<p class="field-label">EXAM TYPE</p>', unsafe_allow_html=True)
+        exam_type = st.selectbox('EXAM TYPE', ['First Term Exam','Second Term Exam','Third Term Exam','Mock Exam','Promotion Exam','Test / Quiz'], key='s_type', label_visibility='collapsed')
+        st.markdown('<p class="field-label">SELECT TIME</p>', unsafe_allow_html=True)
+        exam_time = st.selectbox('SELECT TIME', ['10 Minutes','20 Minutes','30 Minutes','1 Hour'], key='s_time', label_visibility='collapsed')
         agree = st.checkbox('I have read instructions - Do NOT switch tab')
         if st.button('CONTINUE TO PROFILE CHECK'):
-            if not name or not exam_no:
-                st.error('Enter Name + Reg No!')
+            if not name:
+                st.error('Enter Your Full Name!')
             elif pin != EXAM_PIN:
                 st.error('Wrong PIN! Hint: EBS2026')
             elif not agree:
                 st.error('Tick instructions!')
             else:
                 mins = int(exam_time.split()[0]) if 'Hour' not in exam_time else 60
-                st.session_state.student_info = {'name': name, 'exam_no': exam_no, 'subject': subject, 'class': class_, 'term': term, 'exam_type': exam_type, 'mins': mins, 'school': SCHOOL_NAME}
+                st.session_state.student_info = {'name': name, 'exam_no': '', 'subject': subject, 'class': class_, 'term': term, 'exam_type': exam_type, 'mins': mins, 'school': SCHOOL_NAME}
                 st.session_state.profile_ok = True
                 st.rerun()
         st.markdown('</div>', unsafe_allow_html=True)
@@ -222,7 +254,7 @@ if role.startswith('Student'):
         if not filt: filt = st.session_state.questions
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.markdown('<p class="login-title">PROFILE CHECK</p>', unsafe_allow_html=True)
-        st.markdown('<p style="text-align:center;color:#0B2C4A;font-weight:800;">Student: ' + str(info['name']) + '<br>Reg No: ' + str(info['exam_no']) + '<br>Class: ' + str(info['class']) + ' | Subject: ' + str(info['subject']) + '<br>Total Questions: ' + str(len(filt)) + ' | Time: ' + str(info['mins']) + ' Mins</p>', unsafe_allow_html=True)
+        st.markdown('<p style="text-align:center;color:#0B2C4A;font-weight:800;">Student: ' + str(info['name']) + '<br>Class: ' + str(info['class']) + ' | Subject: ' + str(info['subject']) + '<br>Total Questions: ' + str(len(filt)) + ' | Time: ' + str(info['mins']) + ' Mins</p>', unsafe_allow_html=True)
         if st.button('CONFIRM & START EXAM'):
             shuffled = filt.copy()
             random.shuffle(shuffled)
@@ -243,7 +275,7 @@ if role.startswith('Student'):
         st.markdown('</div>', unsafe_allow_html=True)
     else:
         info = st.session_state.student_info
-        st.markdown('<div class="student-bar">Student: ' + str(info['name']) + ' | Reg No: ' + str(info['exam_no']) + ' | Class: ' + str(info['class']) + '</div>', unsafe_allow_html=True)
+        st.markdown('<div class="student-bar">Student: ' + str(info['name']) + ' | Class: ' + str(info['class']) + ' | Subject: ' + str(info['subject']) + '</div>', unsafe_allow_html=True)
         end_time = st.session_state.start_time + timedelta(minutes=info['mins'])
         remaining = end_time - datetime.now()
         total_sec = int(remaining.total_seconds())
@@ -277,7 +309,7 @@ if role.startswith('Student'):
                     if str(st.session_state.answers_dict.get(i,'')).strip().lower()==str(qq['answer']).strip().lower(): score += 1
                 else:
                     if st.session_state.answers_dict.get(i)==qq['answer']: score += 1
-            st.session_state.results.append({'name': info['name'], 'exam_no': info.get('exam_no',''), 'class': info['class'], 'subject': info['subject'], 'term': info['term'], 'exam_type': info.get('exam_type',''), 'score': score, 'total': len(filt), 'school': SCHOOL_NAME, 'date': datetime.now().strftime('%Y-%m-%d %H:%M'), 'theory': theory_txt})
+            st.session_state.results.append({'name': info['name'], 'exam_no': '', 'class': info['class'], 'subject': info['subject'], 'term': info['term'], 'exam_type': info.get('exam_type',''), 'score': score, 'total': len(filt), 'school': SCHOOL_NAME, 'date': datetime.now().strftime('%Y-%m-%d %H:%M'), 'theory': theory_txt})
             st.session_state.active_students = [a for a in st.session_state.active_students if a['name']!=info['name']]
             st.session_state.exam_started = False; st.session_state.profile_ok = False; st.session_state.submitted_msg = True; st.rerun()
         else:
@@ -342,7 +374,7 @@ if role.startswith('Student'):
                         if str(st.session_state.answers_dict.get(i,'')).strip().lower()==str(qq['answer']).strip().lower(): score += 1
                     else:
                         if st.session_state.answers_dict.get(i)==qq['answer']: score += 1
-                st.session_state.results.append({'name': info['name'], 'exam_no': info.get('exam_no',''), 'class': info['class'], 'subject': info['subject'], 'term': info['term'], 'exam_type': info.get('exam_type',''), 'score': score, 'total': len(filtered), 'school': SCHOOL_NAME, 'date': datetime.now().strftime('%Y-%m-%d %H:%M'), 'theory': theory_txt})
+                st.session_state.results.append({'name': info['name'], 'exam_no': '', 'class': info['class'], 'subject': info['subject'], 'term': info['term'], 'exam_type': info.get('exam_type',''), 'score': score, 'total': len(filtered), 'school': SCHOOL_NAME, 'date': datetime.now().strftime('%Y-%m-%d %H:%M'), 'theory': theory_txt})
                 st.session_state.active_students = [a for a in st.session_state.active_students if a['name']!=info['name']]
                 st.session_state.exam_started = False; st.session_state.profile_ok = False; st.session_state.submitted_msg = True; st.session_state.current_q = 0; st.session_state.answers_dict = {}; st.session_state.flagged = set(); st.rerun()
 
