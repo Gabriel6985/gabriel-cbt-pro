@@ -3,7 +3,7 @@ import pandas as pd
 import random
 from datetime import datetime, timedelta
 
-st.set_page_config(page_title='EBUNTAYO SECONDARY SCHOOL - CBT', page_icon='🎓', layout='wide')
+st.set_page_config(page_title='EBUNTAYO SECONDARY SCHOOL - CBT', page_icon='🎓', layout='centered')
 SCHOOL_NAME = 'EBUNTAYO SECONDARY SCHOOL'
 ADMIN_PASS = 'admin123'
 TEACHER_PASS = 'teacher123'
@@ -12,26 +12,29 @@ EXAM_PIN = 'EBS2026'
 CSS = '<style>'
 CSS += '.stApp{background-color:#F2F2F2 !important;}'
 CSS += '.jamb-header{background-color:#0B2C4A;color:white;padding:18px 10px;border-radius:8px 8px 0 0;border:4px solid #FFD700;}'
-CSS += '.jamb-header h1{color:white !important;font-size:42px !important;font-weight:900 !important;margin:0;text-align:center;text-transform:uppercase;letter-spacing:1px;-webkit-text-stroke:1.5px #FFD700;text-shadow:4px 4px 0px #000, 6px 6px 12px rgba(0,0,0,0.8);font-family:Arial Black, Arial, sans-serif !important;line-height:1.1;}'
-CSS += '.jamb-header p{color:#FFD700 !important;text-align:center;font-size:15px;font-weight:900;margin:8px 0 0 0;letter-spacing:3px;}'
-CSS += '.student-bar{background-color:#FFFFFF;border:2px solid #0B2C4A;border-top:none;padding:10px 14px;color:#0B2C4A !important;font-weight:900;font-size:15px;}'
+CSS += '.jamb-header h1{color:white !important;font-size:38px !important;font-weight:900 !important;margin:0;text-align:center;text-transform:uppercase;-webkit-text-stroke:1.5px #FFD700;text-shadow:4px 4px 0px #000;font-family:Arial Black, Arial, sans-serif !important;line-height:1.1;}'
+CSS += '.jamb-header p{color:#FFD700 !important;text-align:center;font-size:14px;font-weight:900;margin:8px 0 0 0;letter-spacing:2px;}'
+CSS += '.student-bar{background-color:#FFFFFF;border:2px solid #0B2C4A;border-top:none;padding:10px 14px;color:#0B2C4A !important;font-weight:900;font-size:15px;text-align:center;}'
 CSS += '.card{background-color:#FFFFFF !important;padding:24px;border-radius:12px;margin-top:14px;border-top:6px solid #FFD700;}'
 CSS += '.login-title{color:#0B2C4A !important;font-size:30px !important;font-weight:900 !important;text-align:center;text-transform:uppercase;margin:0;font-family:Arial Black, Arial, sans-serif;}'
 CSS += '.login-sub{text-align:center;color:#444 !important;font-weight:700;font-size:14px;}'
-CSS += '.field-label{color:#0B2C4A !important;font-weight:900 !important;font-size:18px !important;text-transform:uppercase;margin-top:14px;margin-bottom:2px;letter-spacing:0.5px;}'
-CSS += '.select-role{color:#0B2C4A !important;font-weight:900 !important;font-size:20px !important;text-transform:uppercase;letter-spacing:1px;margin:0;}'
+CSS += '.field-label{color:#0B2C4A !important;font-weight:900 !important;font-size:18px !important;text-transform:uppercase;margin-top:14px;margin-bottom:2px;}'
+CSS += '.select-role{color:#0B2C4A !important;font-weight:900 !important;font-size:20px !important;text-transform:uppercase;margin:0;}'
 CSS += 'label{font-weight:900 !important;color:#0B2C4A !important;font-size:16px !important;}'
 CSS += 'input,textarea,select{background-color:#fff !important;color:#000 !important;border:2.5px solid #0B2C4A !important;border-radius:8px !important;font-weight:800 !important;font-size:16px !important;}'
-CSS += '.stButton>button{background-color:#0A9D58 !important;color:white !important;font-weight:900 !important;border-radius:8px;padding:12px;width:100%;text-transform:uppercase;font-size:18px !important;}'
+CSS += '.stButton>button{background-color:#0A9D58 !important;color:white !important;font-weight:900 !important;border-radius:8px;padding:12px;width:100%;text-transform:uppercase;font-size:17px !important;}'
 CSS += '.footer{text-align:center;margin-top:20px;padding:14px;background-color:#0B2C4A;border-radius:8px;color:white !important;font-weight:700;}'
 CSS += '.footer span{color:#FFD700 !important;}'
-CSS += 'div[data-testid="stRadio"] label{color:#000 !important;font-size:21px !important;font-weight:800 !important;background:#fff !important;padding:14px 12px !important;border:2px solid #ddd !important;border-radius:8px !important;margin-bottom:10px !important;width:100% !important;display:flex !important;align-items:center !important;}'
+CSS += 'div[data-testid="stRadio"] label{color:#000 !important;font-size:21px !important;font-weight:800 !important;background:#fff !important;padding:16px 12px !important;border:3px solid #0B2C4A !important;border-radius:12px !important;margin-bottom:12px !important;width:100% !important;display:flex !important;align-items:center !important;}'
 CSS += 'div[data-testid="stRadio"] p{color:#000 !important;font-weight:800 !important;font-size:21px !important;}'
 CSS += 'div[data-testid="stRadio"] > label{border:none !important;}'
 CSS += '.success-box{background-color:#0A9D58;color:white !important;padding:18px;border-radius:12px;text-align:center;font-size:20px;font-weight:900;margin-top:14px;}'
 CSS += '.student-card{background-color:#fff !important;padding:16px;border-radius:10px;margin-top:10px;border:2px solid #0B2C4A;}'
 CSS += '.student-name{color:#0B2C4A !important;font-size:20px !important;font-weight:900 !important;text-align:center;text-transform:uppercase;margin:0;}'
 CSS += '.student-detail{color:#333 !important;text-align:center;font-weight:700;}'
+CSS += '.palette-box{background-color:#FFFFFF;border:2px solid #0B2C4A;border-radius:10px;padding:14px;margin-top:12px;}'
+CSS += '.palette-title{color:#0B2C4A !important;font-weight:900;font-size:17px;text-align:center;margin:0 0 10px 0;}'
+CSS += '.danger-box{background-color:#FFEBEE;border:2px solid #FF0000;padding:14px;border-radius:10px;margin-top:12px;}'
 CSS += '[data-testid="stSidebar"]{background-color:#001A33 !important;} [data-testid="stSidebar"] *{color:white !important;}'
 CSS += '</style>'
 st.markdown(CSS, unsafe_allow_html=True)
@@ -40,14 +43,18 @@ ALL_SUBJECTS = ['Mathematics','English Language','Physics','Chemistry','Biology'
 ALL_CLASSES = ['JSS 1','JSS 2','JSS 3','SS 1','SS 2','SS 3']
 
 DEFAULT_QUESTIONS = [
-    {'q': 'If 3x + 5 = 20, what is the value of 2x - 1?', 'options': ['7','9','11','15'], 'answer': '9', 'subject': 'Mathematics', 'class': 'SS 2', 'term': 'First Term', 'topic': 'Algebra', 'type': 'Objective', 'passage': ''},
     {'q': 'What is the full meaning of ICT?', 'options': ['Internet and Computer Technology','Information and Communication Technology','Information and Computer Technology','Internet Communication Tool'], 'answer': 'Information and Communication Technology', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'ICT Basics', 'type': 'Objective', 'passage': ''},
     {'q': 'Which of these is an input device?', 'options': ['Monitor','Printer','Keyboard','Speaker'], 'answer': 'Keyboard', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Devices', 'type': 'Objective', 'passage': ''},
     {'q': 'What does CPU stand for?', 'options': ['Central Processing Unit','Computer Personal Unit','Central Program Unit','Computer Processing Utility'], 'answer': 'Central Processing Unit', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'CPU', 'type': 'Objective', 'passage': ''},
-    {'q': 'A computer is an electronic device. True or False?', 'options': ['True','False'], 'answer': 'True', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Basics', 'type': 'True/False', 'passage': ''},
-    {'q': 'The full meaning of RAM is ______', 'options': [], 'answer': 'Random Access Memory', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Memory', 'type': 'Fill-in-blank', 'passage': ''},
-    {'q': 'Explain in your own words what a computer is and list 3 uses.', 'options': [], 'answer': 'Teacher to mark', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Theory', 'type': 'Theory/Essay', 'passage': ''},
+    {'q': 'Which of these is used to store data permanently?', 'options': ['RAM','Hard Disk','Cache','ROM'], 'answer': 'Hard Disk', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Memory', 'type': 'Objective', 'passage': ''},
+    {'q': 'Which program is used to browse the internet?', 'options': ['Microsoft Word','Google Chrome','Microsoft Excel','Paint'], 'answer': 'Google Chrome', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Internet', 'type': 'Objective', 'passage': ''},
+    {'q': 'What is the full meaning of RAM?', 'options': ['Random Access Memory','Read Access Memory','Rapid Access Memory','Random And Memory'], 'answer': 'Random Access Memory', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Memory', 'type': 'Objective', 'passage': ''},
+    {'q': 'A computer is an electronic device. True or False?', 'options': ['True','False','Maybe','None of the above'], 'answer': 'True', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Basics', 'type': 'Objective', 'passage': ''},
+    {'q': 'Which of these is an output device?', 'options': ['Keyboard','Mouse','Monitor','Scanner'], 'answer': 'Monitor', 'subject': 'Computer Studies / ICT', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Devices', 'type': 'Objective', 'passage': ''},
+    {'q': 'If 3x + 5 = 20, what is the value of 2x - 1?', 'options': ['7','9','11','15'], 'answer': '9', 'subject': 'Mathematics', 'class': 'SS 2', 'term': 'First Term', 'topic': 'Algebra', 'type': 'Objective', 'passage': ''},
     {'q': 'What is 2 + 2?', 'options': ['3','4','5','6'], 'answer': '4', 'subject': 'Mathematics', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Addition', 'type': 'Objective', 'passage': ''},
+    {'q': 'What is 10 x 5?', 'options': ['15','50','45','55'], 'answer': '50', 'subject': 'Mathematics', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Multiplication', 'type': 'Objective', 'passage': ''},
+    {'q': 'What is the capital of Nigeria?', 'options': ['Lagos','Abuja','Kano','Ibadan'], 'answer': 'Abuja', 'subject': 'Social Studies', 'class': 'JSS 1', 'term': 'First Term', 'topic': 'Capital', 'type': 'Objective', 'passage': ''},
 ]
 
 def show_pie_chart(correct, wrong, title, student_name=''):
@@ -87,9 +94,17 @@ if role.startswith('TEACHER'):
     st.markdown('<p class="field-label">TEACHER PASSWORD</p>', unsafe_allow_html=True)
     tp = st.text_input('TEACHER PASSWORD', type='password', label_visibility='collapsed')
     if tp == TEACHER_PASS:
-        st.success('Welcome Teacher!')
-        st.markdown('<p class="field-label">QUESTION TYPE</p>', unsafe_allow_html=True)
-        q_type = st.selectbox('QUESTION TYPE', ['Objective','True/False','Fill-in-blank','Theory/Essay'], label_visibility='collapsed')
+        st.success('Welcome Teacher! You can set YOUR OWN questions here.')
+        st.markdown('<div class="danger-box">', unsafe_allow_html=True)
+        st.markdown('<p style="color:#FF0000 !important;font-weight:900;text-align:center;">START FRESH - DELETE SAMPLE QUESTIONS</p>', unsafe_allow_html=True)
+        st.markdown('<p style="color:#0B2C4A !important;text-align:center;font-weight:700;">My sample questions are only for testing. Click below to delete them all and add only YOUR school questions.</p>', unsafe_allow_html=True)
+        if st.button('DELETE ALL SAMPLE QUESTIONS - START FRESH'):
+            st.session_state.questions = []
+            st.success('Deleted! Question Bank is now 0. Add only YOUR questions below.')
+            st.rerun()
+        st.markdown('</div>', unsafe_allow_html=True)
+        st.markdown('---')
+        st.subheader('1. ADD YOUR OWN QUESTION - MULTIPLE CHOICE A,B,C,D')
         st.markdown('<p class="field-label">SUBJECT</p>', unsafe_allow_html=True)
         tq_subj = st.selectbox('SUBJECT', ALL_SUBJECTS, key='t_subj', label_visibility='collapsed')
         st.markdown('<p class="field-label">CLASS</p>', unsafe_allow_html=True)
@@ -98,49 +113,29 @@ if role.startswith('TEACHER'):
         tq_term = st.selectbox('TERM', ['First Term','Second Term','Third Term'], key='t_term', label_visibility='collapsed')
         st.markdown('<p class="field-label">TOPIC</p>', unsafe_allow_html=True)
         tq_topic = st.text_input('TOPIC', label_visibility='collapsed')
-        st.markdown('<p class="field-label">PASSAGE (OPTIONAL)</p>', unsafe_allow_html=True)
-        tq_passage = st.text_area('PASSAGE', label_visibility='collapsed')
         st.markdown('<p class="field-label">QUESTION</p>', unsafe_allow_html=True)
         tq_q = st.text_area('QUESTION', label_visibility='collapsed')
-        if q_type == 'Objective':
-            st.markdown('<p class="field-label">OPTION A</p>', unsafe_allow_html=True)
-            o1 = st.text_input('OPTION A', label_visibility='collapsed')
-            st.markdown('<p class="field-label">OPTION B</p>', unsafe_allow_html=True)
-            o2 = st.text_input('OPTION B', label_visibility='collapsed')
-            st.markdown('<p class="field-label">OPTION C</p>', unsafe_allow_html=True)
-            o3 = st.text_input('OPTION C', label_visibility='collapsed')
-            st.markdown('<p class="field-label">OPTION D</p>', unsafe_allow_html=True)
-            o4 = st.text_input('OPTION D', label_visibility='collapsed')
-            st.markdown('<p class="field-label">CORRECT ANSWER</p>', unsafe_allow_html=True)
-            corr = st.selectbox('CORRECT', ['Option A','Option B','Option C','Option D'], label_visibility='collapsed')
-            if st.button('Add Objective'):
-                opts = [o1,o2,o3,o4]
-                ans = opts[['Option A','Option B','Option C','Option D'].index(corr)]
-                if tq_q and all(opts):
-                    st.session_state.questions.append({'q': tq_q, 'options': opts, 'answer': ans, 'subject': tq_subj, 'class': tq_class, 'term': tq_term, 'topic': tq_topic, 'type': 'Objective', 'passage': tq_passage})
-                    st.success('Added!')
-        elif q_type == 'True/False':
-            st.markdown('<p class="field-label">CORRECT ANSWER</p>', unsafe_allow_html=True)
-            corr2 = st.selectbox('CORRECT', ['True','False'], label_visibility='collapsed')
-            if st.button('Add True/False'):
-                if tq_q:
-                    st.session_state.questions.append({'q': tq_q, 'options': ['True','False'], 'answer': corr2, 'subject': tq_subj, 'class': tq_class, 'term': tq_term, 'topic': tq_topic, 'type': 'True/False', 'passage': tq_passage})
-                    st.success('Added!')
-        elif q_type == 'Fill-in-blank':
-            st.markdown('<p class="field-label">CORRECT ANSWER</p>', unsafe_allow_html=True)
-            ans_fill = st.text_input('CORRECT ANSWER', label_visibility='collapsed')
-            if st.button('Add Fill-in-blank'):
-                if tq_q:
-                    st.session_state.questions.append({'q': tq_q, 'options': [], 'answer': ans_fill, 'subject': tq_subj, 'class': tq_class, 'term': tq_term, 'topic': tq_topic, 'type': 'Fill-in-blank', 'passage': tq_passage})
-                    st.success('Added!')
-        else:
-            if st.button('Add Theory'):
-                if tq_q:
-                    st.session_state.questions.append({'q': tq_q, 'options': [], 'answer': 'Teacher to mark', 'subject': tq_subj, 'class': tq_class, 'term': tq_term, 'topic': tq_topic, 'type': 'Theory/Essay', 'passage': tq_passage})
-                    st.success('Added!')
+        st.markdown('<p class="field-label">OPTION A</p>', unsafe_allow_html=True)
+        o1 = st.text_input('OPTION A', label_visibility='collapsed')
+        st.markdown('<p class="field-label">OPTION B</p>', unsafe_allow_html=True)
+        o2 = st.text_input('OPTION B', label_visibility='collapsed')
+        st.markdown('<p class="field-label">OPTION C</p>', unsafe_allow_html=True)
+        o3 = st.text_input('OPTION C', label_visibility='collapsed')
+        st.markdown('<p class="field-label">OPTION D</p>', unsafe_allow_html=True)
+        o4 = st.text_input('OPTION D', label_visibility='collapsed')
+        st.markdown('<p class="field-label">CORRECT ANSWER</p>', unsafe_allow_html=True)
+        corr = st.selectbox('CORRECT', ['Option A','Option B','Option C','Option D'], label_visibility='collapsed')
+        if st.button('Add My Question'):
+            opts = [o1,o2,o3,o4]
+            ans = opts[['Option A','Option B','Option C','Option D'].index(corr)]
+            if tq_q and all(opts):
+                st.session_state.questions.append({'q': tq_q, 'options': opts, 'answer': ans, 'subject': tq_subj, 'class': tq_class, 'term': tq_term, 'topic': tq_topic, 'type': 'Objective', 'passage': ''})
+                st.success('Your question added! Student will see it.')
+            else:
+                st.error('Fill all fields!')
         st.markdown('---')
-        st.subheader('Bulk Upload CSV')
-        st.info('Columns: question,optionA,optionB,optionC,optionD,answer,subject,class,term,topic,type')
+        st.subheader('2. BULK UPLOAD - ADD MANY QUESTIONS AT ONCE (EXCEL / CSV)')
+        st.info('Columns: question,optionA,optionB,optionC,optionD,answer,subject,class,term,topic')
         up = st.file_uploader('Upload CSV', type=['csv'])
         if up is not None:
             try:
@@ -148,14 +143,24 @@ if role.startswith('TEACHER'):
                 for _, r in df_up.iterrows():
                     opts = [str(r.get('optionA','')), str(r.get('optionB','')), str(r.get('optionC','')), str(r.get('optionD',''))]
                     opts = [o for o in opts if o and o != 'nan']
-                    st.session_state.questions.append({'q': str(r.get('question','')), 'options': opts, 'answer': str(r.get('answer','')), 'subject': str(r.get('subject','Mathematics')), 'class': str(r.get('class','JSS 1')), 'term': str(r.get('term','First Term')), 'topic': str(r.get('topic','')), 'type': str(r.get('type','Objective')), 'passage': ''})
-                st.success('Uploaded!')
+                    st.session_state.questions.append({'q': str(r.get('question','')), 'options': opts, 'answer': str(r.get('answer','')), 'subject': str(r.get('subject','Mathematics')), 'class': str(r.get('class','JSS 1')), 'term': str(r.get('term','First Term')), 'topic': str(r.get('topic','')), 'type': 'Objective', 'passage': ''})
+                st.success('Uploaded your questions!')
             except Exception as e:
                 st.error(str(e))
         st.markdown('---')
-        st.subheader('Question Bank')
-        st.write('Total: ' + str(len(st.session_state.questions)))
-        st.dataframe(pd.DataFrame(st.session_state.questions))
+        st.subheader('3. QUESTION BANK - YOUR QUESTIONS')
+        st.write('Total Questions in Bank: ' + str(len(st.session_state.questions)))
+        if len(st.session_state.questions) == 0:
+            st.warning('Bank is empty. Add your own questions above. Students will see NO questions until you add.')
+        else:
+            st.dataframe(pd.DataFrame(st.session_state.questions))
+            st.markdown('<p class="field-label">DELETE ONE QUESTION</p>', unsafe_allow_html=True)
+            q_labels = [str(i+1) + '. ' + str(q['q'])[:80] for i, q in enumerate(st.session_state.questions)]
+            del_idx = st.selectbox('Select Question to Delete', range(len(q_labels)), format_func=lambda x: q_labels[x])
+            if st.button('Delete This One Question'):
+                del st.session_state.questions[del_idx]
+                st.success('Deleted one question!')
+                st.rerun()
     elif tp:
         st.error('Wrong Password')
     st.markdown('</div>', unsafe_allow_html=True)
@@ -252,6 +257,7 @@ if role.startswith('STUDENT'):
         filt = [q for q in st.session_state.questions if q.get('subject')==info['subject'] and q.get('class')==info['class']]
         if not filt: filt = [q for q in st.session_state.questions if q.get('subject')==info['subject']]
         if not filt: filt = st.session_state.questions
+        filt = [q for q in filt if q.get('options') and len(q.get('options'))>=2]
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.markdown('<p class="login-title">PROFILE CHECK</p>', unsafe_allow_html=True)
         st.markdown('<p style="text-align:center;color:#0B2C4A;font-weight:800;">Student: ' + str(info['name']) + '<br>Class: ' + str(info['class']) + ' | Subject: ' + str(info['subject']) + '<br>Total Questions: ' + str(len(filt)) + ' | Time: ' + str(info['mins']) + ' Mins</p>', unsafe_allow_html=True)
@@ -279,17 +285,6 @@ if role.startswith('STUDENT'):
         end_time = st.session_state.start_time + timedelta(minutes=info['mins'])
         remaining = end_time - datetime.now()
         total_sec = int(remaining.total_seconds())
-        subj_cols = st.columns(4)
-        for i, subj in enumerate(['Mathematics','English Language','Physics','Chemistry']):
-            is_active = (subj == info['subject'])
-            label = subj + ' (Active)' if is_active else subj
-            if subj_cols[i].button(label, key='subj_' + subj):
-                new_filt = [q for q in st.session_state.questions if q.get('subject')==subj]
-                if new_filt:
-                    st.session_state.student_info['subject'] = subj
-                    st.session_state.shuffled_q = new_filt
-                    st.session_state.current_q = 0
-                    st.rerun()
         with st.expander('Calculator - Click to Open'):
             c1,c2,c3 = st.columns(3)
             n1 = c1.number_input('First', value=0.0, key='calc1')
@@ -302,58 +297,44 @@ if role.startswith('STUDENT'):
             st.success('Answer: ' + str(res))
         if total_sec <= 0:
             filt = st.session_state.shuffled_q
-            score = 0; theory_txt = ''
+            score = 0
             for i, qq in enumerate(filt):
-                if qq.get('type')=='Theory/Essay': theory_txt += str(st.session_state.answers_dict.get(i,'')) + ' | '
-                elif qq.get('type')=='Fill-in-blank':
-                    if str(st.session_state.answers_dict.get(i,'')).strip().lower()==str(qq['answer']).strip().lower(): score += 1
-                else:
-                    if st.session_state.answers_dict.get(i)==qq['answer']: score += 1
-            st.session_state.results.append({'name': info['name'], 'exam_no': '', 'class': info['class'], 'subject': info['subject'], 'term': info['term'], 'exam_type': info.get('exam_type',''), 'score': score, 'total': len(filt), 'school': SCHOOL_NAME, 'date': datetime.now().strftime('%Y-%m-%d %H:%M'), 'theory': theory_txt})
+                if st.session_state.answers_dict.get(i)==qq['answer']: score += 1
+            st.session_state.results.append({'name': info['name'], 'exam_no': '', 'class': info['class'], 'subject': info['subject'], 'term': info['term'], 'exam_type': info.get('exam_type',''), 'score': score, 'total': len(filt), 'school': SCHOOL_NAME, 'date': datetime.now().strftime('%Y-%m-%d %H:%M'), 'theory': ''})
             st.session_state.active_students = [a for a in st.session_state.active_students if a['name']!=info['name']]
             st.session_state.exam_started = False; st.session_state.profile_ok = False; st.session_state.submitted_msg = True; st.rerun()
         else:
             st.markdown('<div style="background:#FF0000;color:white;text-align:center;padding:8px;font-weight:900;font-size:20px;border:2px solid #0B2C4A;border-top:none;">TIME: ' + str(total_sec//60).zfill(2) + ':' + str(total_sec%60).zfill(2) + '</div>', unsafe_allow_html=True)
         filtered = st.session_state.shuffled_q
         total_q = len(filtered)
-        left, right = st.columns([3, 1])
-        with left:
-            q = filtered[st.session_state.current_q]
-            st.markdown('<div style="background:white;border:2px solid #0B2C4A;border-top:none;padding:20px;min-height:300px;"><p style="color:#0B2C4A;font-weight:900;font-size:16px;">Question ' + str(st.session_state.current_q+1) + ' of ' + str(total_q) + '</p><p style="color:#0B2C4A;font-weight:800;font-size:21px;">' + str(q['q']) + '</p></div>', unsafe_allow_html=True)
-            prev = st.session_state.answers_dict.get(st.session_state.current_q, None)
-            if q.get('type') in ['Objective','True/False']:
-                opts = q['options']; letters = ['A.','B.','C.','D.']
-                opts_letter = [letters[i] + '  ' + opts[i] for i in range(len(opts))]
-                d_idx = None
-                if prev:
-                    try: d_idx = opts.index(prev)
-                    except: d_idx = None
-                choice = st.radio('Select:', opts_letter, index=d_idx, key='radio_' + str(st.session_state.current_q), label_visibility='collapsed')
-                if choice: st.session_state.answers_dict[st.session_state.current_q] = opts[letters.index(choice[:2])]
-            elif q.get('type')=='Fill-in-blank':
-                ans_fill = st.text_input('Type answer:', value=str(prev) if prev else '', key='fill_' + str(st.session_state.current_q))
-                if ans_fill: st.session_state.answers_dict[st.session_state.current_q] = ans_fill
-            else:
-                if q.get('passage'): st.info('Passage: ' + str(q['passage']))
-                ans_theory = st.text_area('Write answer:', value=str(prev) if prev else '', key='theory_' + str(st.session_state.current_q), height=120)
-                if ans_theory: st.session_state.answers_dict[st.session_state.current_q] = ans_theory
-            if st.button('FLAG QUESTION' if st.session_state.current_q not in st.session_state.flagged else 'UNFLAG QUESTION'):
-                if st.session_state.current_q in st.session_state.flagged: st.session_state.flagged.remove(st.session_state.current_q)
-                else: st.session_state.flagged.add(st.session_state.current_q)
-                st.rerun()
-        with right:
-            st.markdown('<div style="background:#F8F9FA;border:2px solid #0B2C4A;border-top:none;padding:12px;min-height:300px;"><p style="text-align:center;font-weight:900;color:#0B2C4A;">QUESTION PALETTE</p></div>', unsafe_allow_html=True)
-            for row_start in range(0, total_q, 5):
-                pcols = st.columns(5)
-                for j in range(5):
-                    idx = row_start + j
-                    if idx < total_q:
-                        if idx in st.session_state.flagged: lab = 'FLAG ' + str(idx+1)
-                        elif idx in st.session_state.answers_dict and st.session_state.answers_dict[idx] not in [None,'']: lab = 'DONE ' + str(idx+1)
-                        else: lab = str(idx+1)
-                        if idx == st.session_state.current_q: lab = '[' + str(idx+1) + '*]'
-                        if pcols[j].button(lab, key='pal_' + str(idx)): st.session_state.current_q = idx; st.rerun()
-            st.markdown('<div style="background:#F8F9FA;border:2px solid #0B2C4A;padding:10px;color:#0B2C4A;font-weight:700;font-size:13px;">LEGEND:<br>Answered = DONE<br>Unanswered = Number<br>Flagged = FLAG<br><br>Answered: ' + str(len([v for v in st.session_state.answers_dict.values() if v not in [None,'']])) + ' / ' + str(total_q) + '<br>Flagged: ' + str(len(st.session_state.flagged)) + '</div>', unsafe_allow_html=True)
+        q = filtered[st.session_state.current_q]
+        st.markdown('<div style="background:white;border:2px solid #0B2C4A;padding:20px;border-radius:10px;margin-top:12px;"><p style="color:#0B2C4A;font-weight:900;font-size:16px;">Question ' + str(st.session_state.current_q+1) + ' of ' + str(total_q) + ' | Subject: ' + str(info['subject']) + '</p><p style="color:#0B2C4A;font-weight:800;font-size:22px;">' + str(q['q']) + '</p></div>', unsafe_allow_html=True)
+        prev = st.session_state.answers_dict.get(st.session_state.current_q, None)
+        opts = q['options']; letters = ['A.','B.','C.','D.']
+        while len(opts) < 4: opts = opts + ['-']
+        opts_letter = [letters[i] + '  ' + opts[i] for i in range(min(4, len(opts)))]
+        d_idx = None
+        if prev:
+            try: d_idx = opts.index(prev)
+            except: d_idx = None
+        choice = st.radio('Select your answer:', opts_letter, index=d_idx, key='radio_' + str(st.session_state.current_q), label_visibility='collapsed')
+        if choice: st.session_state.answers_dict[st.session_state.current_q] = opts[letters.index(choice[:2])]
+        if st.button('FLAG QUESTION' if st.session_state.current_q not in st.session_state.flagged else 'UNFLAG QUESTION'):
+            if st.session_state.current_q in st.session_state.flagged: st.session_state.flagged.remove(st.session_state.current_q)
+            else: st.session_state.flagged.add(st.session_state.current_q)
+            st.rerun()
+        st.markdown('<div class="palette-box"><p class="palette-title">QUESTION PALETTE - CLICK NUMBER TO JUMP</p></div>', unsafe_allow_html=True)
+        for row_start in range(0, total_q, 5):
+            pcols = st.columns(5)
+            for j in range(5):
+                idx = row_start + j
+                if idx < total_q:
+                    if idx in st.session_state.flagged: lab = 'FLAG ' + str(idx+1)
+                    elif idx in st.session_state.answers_dict and st.session_state.answers_dict[idx] not in [None,'']: lab = 'DONE ' + str(idx+1)
+                    else: lab = str(idx+1)
+                    if idx == st.session_state.current_q: lab = '[' + str(idx+1) + '*]'
+                    if pcols[j].button(lab, key='pal_' + str(idx)): st.session_state.current_q = idx; st.rerun()
+        st.markdown('<div style="background:#FFF3CD;border:2px solid #FFD700;padding:10px;border-radius:8px;color:#0B2C4A;font-weight:700;text-align:center;">LEGEND: DONE = Answered | Number = Not Answered | FLAG = Flagged | Answered: ' + str(len([v for v in st.session_state.answers_dict.values() if v not in [None,'']])) + ' / ' + str(total_q) + ' | Flagged: ' + str(len(st.session_state.flagged)) + '</div>', unsafe_allow_html=True)
         b1,b2,b3,b4 = st.columns(4)
         with b1:
             if st.button('< Previous'):
@@ -367,14 +348,10 @@ if role.startswith('STUDENT'):
                 if st.session_state.current_q<total_q-1: st.session_state.current_q += 1; st.rerun()
         with b4:
             if st.button('SUBMIT EXAM'):
-                score = 0; theory_txt = ''
+                score = 0
                 for i, qq in enumerate(filtered):
-                    if qq.get('type')=='Theory/Essay': theory_txt += str(st.session_state.answers_dict.get(i,'')) + ' | '
-                    elif qq.get('type')=='Fill-in-blank':
-                        if str(st.session_state.answers_dict.get(i,'')).strip().lower()==str(qq['answer']).strip().lower(): score += 1
-                    else:
-                        if st.session_state.answers_dict.get(i)==qq['answer']: score += 1
-                st.session_state.results.append({'name': info['name'], 'exam_no': '', 'class': info['class'], 'subject': info['subject'], 'term': info['term'], 'exam_type': info.get('exam_type',''), 'score': score, 'total': len(filtered), 'school': SCHOOL_NAME, 'date': datetime.now().strftime('%Y-%m-%d %H:%M'), 'theory': theory_txt})
+                    if st.session_state.answers_dict.get(i)==qq['answer']: score += 1
+                st.session_state.results.append({'name': info['name'], 'exam_no': '', 'class': info['class'], 'subject': info['subject'], 'term': info['term'], 'exam_type': info.get('exam_type',''), 'score': score, 'total': len(filtered), 'school': SCHOOL_NAME, 'date': datetime.now().strftime('%Y-%m-%d %H:%M'), 'theory': ''})
                 st.session_state.active_students = [a for a in st.session_state.active_students if a['name']!=info['name']]
                 st.session_state.exam_started = False; st.session_state.profile_ok = False; st.session_state.submitted_msg = True; st.session_state.current_q = 0; st.session_state.answers_dict = {}; st.session_state.flagged = set(); st.rerun()
 
