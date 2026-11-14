@@ -11,38 +11,38 @@ EXAM_PIN = 'EBS2026'
 
 CSS = '<style>'
 CSS += '.stApp{background-color:#F2F2F2 !important;}'
-CSS += '.block-container{padding-top:0.5rem !important;padding-bottom:0.5rem !important;max-width:100% !important;}'
-CSS += 'div[data-testid="stVerticalBlock"]{gap:0rem !important;}'
-CSS += '.jamb-header{background-color:#0B2C4A;color:white;padding:12px 10px;border-radius:8px 8px 0 0;border:4px solid #FFD700;position:relative;overflow:hidden;}'
-CSS += '.cap-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:140px;opacity:0.12;z-index:0;}'
-CSS += '.jamb-header h1{color:white !important;font-size:42px !important;font-weight:900 !important;margin:0;text-align:center;text-transform:uppercase;-webkit-text-stroke:2px #FFD700;text-shadow:4px 4px 0px #000;font-family:Arial Black, Arial, sans-serif !important;line-height:1.05;position:relative;z-index:1;}'
-CSS += '.jamb-header p{color:#FFD700 !important;text-align:center;font-size:13px;font-weight:900;margin:5px 0 0 0;letter-spacing:2px;position:relative;z-index:1;}'
-CSS += '.student-bar{background-color:#FFFFFF;border:2px solid #0B2C4A;border-top:none;padding:6px;color:#0B2C4A !important;font-weight:900;font-size:14px;text-align:center;}'
-CSS += '.card{background-color:#FFFFFF !important;padding:18px;border-radius:10px;margin-top:10px;border-top:5px solid #FFD700;}'
+CSS += '.block-container{padding-top:1rem !important;padding-bottom:1rem !important;max-width:100% !important;}'
+CSS += 'div[data-testid="stVerticalBlock"]{gap:0.6rem !important;}'
+CSS += '.jamb-header{background-color:#0B2C4A;color:white;padding:16px 10px;border-radius:8px 8px 0 0;border:4px solid #FFD700;position:relative;overflow:hidden;}'
+CSS += '.cap-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:150px;opacity:0.12;z-index:0;}'
+CSS += '.jamb-header h1{color:white !important;font-size:46px !important;font-weight:900 !important;margin:0;text-align:center;text-transform:uppercase;-webkit-text-stroke:2px #FFD700;text-shadow:4px 4px 0px #000;font-family:Arial Black, Arial, sans-serif !important;line-height:1.1;position:relative;z-index:1;}'
+CSS += '.jamb-header p{color:#FFD700 !important;text-align:center;font-size:14px;font-weight:900;margin:8px 0 0 0;letter-spacing:2px;position:relative;z-index:1;}'
+CSS += '.student-bar{background-color:#FFFFFF;border:2px solid #0B2C4A;border-top:none;padding:10px;color:#0B2C4A !important;font-weight:900;font-size:15px;text-align:center;}'
+CSS += '.card{background-color:#FFFFFF !important;padding:22px;border-radius:10px;margin-top:12px;border-top:5px solid #FFD700;}'
 CSS += '.login-title{color:#0B2C4A !important;font-size:28px !important;font-weight:900 !important;text-align:center;text-transform:uppercase;margin:0;font-family:Arial Black, Arial, sans-serif;}'
-CSS += '.login-sub{text-align:center;color:#444 !important;font-weight:700;font-size:13px;}'
-CSS += '.field-label{color:#0B2C4A !important;font-weight:900 !important;font-size:16px !important;text-transform:uppercase;margin-top:10px;margin-bottom:0px;}'
+CSS += '.login-sub{text-align:center;color:#444 !important;font-weight:700;font-size:14px;}'
+CSS += '.field-label{color:#0B2C4A !important;font-weight:900 !important;font-size:16px !important;text-transform:uppercase;margin-top:12px;margin-bottom:4px;}'
 CSS += '.select-role{color:#0B2C4A !important;font-weight:900 !important;font-size:18px !important;text-transform:uppercase;margin:0;}'
 CSS += 'label{font-weight:900 !important;color:#0B2C4A !important;font-size:15px !important;}'
 CSS += 'input,textarea,select{background-color:#fff !important;color:#000 !important;border:2px solid #0B2C4A !important;border-radius:8px !important;font-weight:800 !important;font-size:15px !important;}'
-CSS += '.stButton>button{background-color:#0A9D58 !important;color:white !important;font-weight:900 !important;border-radius:8px;padding:8px;width:100%;text-transform:uppercase;font-size:14px !important;}'
-CSS += '.footer{text-align:center;margin-top:8px;padding:10px;background-color:#0B2C4A;border-radius:8px;color:white !important;font-weight:700;font-size:13px;}'
+CSS += '.stButton>button{background-color:#0A9D58 !important;color:white !important;font-weight:900 !important;border-radius:8px;padding:10px;width:100%;text-transform:uppercase;font-size:14px !important;}'
+CSS += '.footer{text-align:center;margin-top:14px;padding:12px;background-color:#0B2C4A;border-radius:8px;color:white !important;font-weight:700;font-size:13px;}'
 CSS += '.footer span{color:#FFD700 !important;}'
-# COMPACT - QUESTION + ANSWERS CLOSE TOGETHER, NO BLANK
-CSS += '.q-box{background-color:white;border:2px solid #0B2C4A;padding:10px 12px;border-radius:10px;margin-top:8px;margin-bottom:0px;}'
-CSS += '.q-title{color:#0B2C4A !important;font-weight:900;font-size:15px;margin:0;}'
-CSS += '.q-text{color:#000 !important;font-weight:800;font-size:19px;line-height:1.2;margin:4px 0 6px 0;}'
-CSS += 'div[data-testid="stRadio"]{gap:0px !important;margin-top:0px !important;}'
-CSS += 'div[data-testid="stRadio"] label{color:#000 !important;font-size:16px !important;font-weight:700 !important;background:#F8F8F8 !important;padding:6px 10px !important;border:2px solid #0B2C4A !important;border-radius:8px !important;margin-bottom:4px !important;width:100% !important;display:flex !important;align-items:center !important;}'
-CSS += 'div[data-testid="stRadio"] p{color:#000 !important;font-weight:700 !important;font-size:16px !important;margin:0 !important;}'
+# BALANCED SPACING - NOT TOO CLOSE, NOT TOO FAR - EASY TO READ
+CSS += '.q-box{background-color:white;border:2px solid #0B2C4A;padding:18px 18px 14px 18px;border-radius:12px;margin-top:14px;margin-bottom:6px;}'
+CSS += '.q-title{color:#0B2C4A !important;font-weight:900;font-size:16px;margin:0 0 10px 0;}'
+CSS += '.q-text{color:#000 !important;font-weight:800;font-size:21px;line-height:1.5;margin:0 0 14px 0;}'
+CSS += 'div[data-testid="stRadio"]{gap:8px !important;margin-top:4px !important;}'
+CSS += 'div[data-testid="stRadio"] label{color:#000 !important;font-size:17px !important;font-weight:700 !important;background:#F8F8F8 !important;padding:11px 12px !important;border:2px solid #0B2C4A !important;border-radius:10px !important;margin-bottom:8px !important;width:100% !important;display:flex !important;align-items:center !important;line-height:1.4 !important;}'
+CSS += 'div[data-testid="stRadio"] p{color:#000 !important;font-weight:700 !important;font-size:17px !important;margin:0 !important;line-height:1.4 !important;}'
 CSS += 'div[data-testid="stRadio"] > label{border:none !important;background:none !important;padding:0 !important;}'
-CSS += '.success-box{background-color:#0A9D58;color:white !important;padding:14px;border-radius:10px;text-align:center;font-size:18px;font-weight:900;margin-top:10px;}'
-CSS += '.student-card{background-color:#fff !important;padding:12px;border-radius:10px;margin-top:8px;border:2px solid #0B2C4A;}'
+CSS += '.success-box{background-color:#0A9D58;color:white !important;padding:16px;border-radius:10px;text-align:center;font-size:18px;font-weight:900;margin-top:12px;}'
+CSS += '.student-card{background-color:#fff !important;padding:14px;border-radius:10px;margin-top:10px;border:2px solid #0B2C4A;}'
 CSS += '.student-name{color:#0B2C4A !important;font-size:18px !important;font-weight:900 !important;text-align:center;text-transform:uppercase;margin:0;}'
 CSS += '.student-detail{color:#333 !important;text-align:center;font-weight:700;}'
-CSS += '.palette-box{background-color:#FFFFFF;border:2px solid #0B2C4A;border-radius:10px;padding:8px;margin-top:8px;}'
-CSS += '.palette-title{color:#0B2C4A !important;font-weight:900;font-size:14px;text-align:center;margin:0 0 6px 0;}'
-CSS += '.danger-box{background-color:#FFEBEE;border:2px solid #FF0000;padding:10px;border-radius:10px;margin-top:10px;}'
+CSS += '.palette-box{background-color:#FFFFFF;border:2px solid #0B2C4A;border-radius:10px;padding:12px;margin-top:12px;}'
+CSS += '.palette-title{color:#0B2C4A !important;font-weight:900;font-size:15px;text-align:center;margin:0 0 8px 0;}'
+CSS += '.danger-box{background-color:#FFEBEE;border:2px solid #FF0000;padding:12px;border-radius:10px;margin-top:12px;}'
 CSS += '[data-testid="stSidebar"]{background-color:#001A33 !important;} [data-testid="stSidebar"] *{color:white !important;}'
 CSS += '</style>'
 st.markdown(CSS, unsafe_allow_html=True)
@@ -322,15 +322,14 @@ if role.startswith('STUDENT'):
             st.session_state.active_students = [a for a in st.session_state.active_students if a['name']!=info['name']]
             st.session_state.exam_started = False; st.session_state.profile_ok = False; st.session_state.submitted_msg = True; st.rerun()
         else:
-            st.markdown('<div style="background:#FF0000;color:white;text-align:center;padding:5px;font-weight:900;font-size:18px;border:2px solid #0B2C4A;border-top:none;">TIME: ' + str(total_sec//60).zfill(2) + ':' + str(total_sec%60).zfill(2) + ' | Questions ' + str(st.session_state.current_q+1) + '-' + str(min(st.session_state.current_q+2, len(st.session_state.shuffled_q))) + ' of ' + str(len(st.session_state.shuffled_q)) + '</div>', unsafe_allow_html=True)
+            st.markdown('<div style="background:#FF0000;color:white;text-align:center;padding:8px;font-weight:900;font-size:18px;border:2px solid #0B2C4A;border-top:none;">TIME: ' + str(total_sec//60).zfill(2) + ':' + str(total_sec%60).zfill(2) + ' | Questions ' + str(st.session_state.current_q+1) + '-' + str(min(st.session_state.current_q+2, len(st.session_state.shuffled_q))) + ' of ' + str(len(st.session_state.shuffled_q)) + '</div>', unsafe_allow_html=True)
         filtered = st.session_state.shuffled_q
         total_q = len(filtered)
-        # COMPACT: QUESTION + ANSWERS IN SAME BOX, NO GAP, NO SCROLL
+        # BALANCED: QUESTION + ANSWERS IN SAME BOX, WITH GOOD SPACING TO READ WELL
         idx_list = [st.session_state.current_q, st.session_state.current_q+1]
         for idx in idx_list:
             if idx < total_q:
                 q = filtered[idx]
-                # Open ONE box for Q + Options together
                 st.markdown('<div class="q-box"><p class="q-title">Question ' + str(idx+1) + ' of ' + str(total_q) + ' | ' + str(info['subject']) + '</p><p class="q-text">' + str(q['q']) + '</p>', unsafe_allow_html=True)
                 prev = st.session_state.answers_dict.get(idx, None)
                 opts = q['options']; letters = ['A.','B.','C.','D.']
@@ -340,10 +339,8 @@ if role.startswith('STUDENT'):
                 if prev:
                     try: d_idx = opts.index(prev)
                     except: d_idx = None
-                # Options are INSIDE same area, immediately below question
                 choice = st.radio('Select Q' + str(idx+1), opts_letter, index=d_idx, key='radio_' + str(idx), label_visibility='collapsed')
                 if choice: st.session_state.answers_dict[idx] = opts[letters.index(choice[:2])]
-                # Clear + Flag buttons RIGHT under answers, in same box area
                 cc1, cc2 = st.columns(2)
                 with cc1:
                     if st.button('CLEAR Q' + str(idx+1), key='clear_' + str(idx)):
@@ -355,7 +352,6 @@ if role.startswith('STUDENT'):
                         else: st.session_state.flagged.add(idx)
                         st.rerun()
                 st.markdown('</div>', unsafe_allow_html=True)
-        # PALETTE + BUTTONS - ALL TOGETHER IMMEDIATELY BELOW QUESTIONS, NO SCROLL
         st.markdown('<div class="palette-box"><p class="palette-title">QUESTION PALETTE - CLICK NUMBER TO JUMP | Answered: ' + str(len([v for v in st.session_state.answers_dict.values() if v not in [None,'']])) + ' / ' + str(total_q) + ' | Flagged: ' + str(len(st.session_state.flagged)) + '</p></div>', unsafe_allow_html=True)
         for row_start in range(0, total_q, 10):
             pcols = st.columns(10)
@@ -369,7 +365,6 @@ if role.startswith('STUDENT'):
                     if pcols[j].button(lab, key='pal_' + str(idx)):
                         st.session_state.current_q = idx if idx % 2 == 0 else idx-1
                         st.rerun()
-        # Previous / Next / Submit - IN ONE ROW, RIGHT UNDER PALETTE
         b1,b2,b3,b4 = st.columns(4)
         with b1:
             if st.button('< Previous'):
