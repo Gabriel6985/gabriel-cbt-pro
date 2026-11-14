@@ -11,9 +11,10 @@ EXAM_PIN = 'EBS2026'
 
 CSS = '<style>'
 CSS += '.stApp{background-color:#F2F2F2 !important;}'
-CSS += '.jamb-header{background-color:#0B2C4A;color:white;padding:22px 10px;border-radius:8px 8px 0 0;border:5px solid #FFD700;}'
-CSS += '.jamb-header h1{color:white !important;font-size:52px !important;font-weight:900 !important;margin:0;text-align:center;text-transform:uppercase;-webkit-text-stroke:2.5px #FFD700;text-shadow:5px 5px 0px #000, 8px 8px 15px rgba(0,0,0,0.9);font-family:Arial Black, Arial, sans-serif !important;line-height:1.05;letter-spacing:1px;}'
-CSS += '.jamb-header p{color:#FFD700 !important;text-align:center;font-size:16px;font-weight:900;margin:10px 0 0 0;letter-spacing:3px;}'
+CSS += '.jamb-header{background-color:#0B2C4A;color:white;padding:22px 10px;border-radius:8px 8px 0 0;border:5px solid #FFD700;position:relative;overflow:hidden;}'
+CSS += '.cap-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:170px;opacity:0.12;z-index:0;}'
+CSS += '.jamb-header h1{color:white !important;font-size:52px !important;font-weight:900 !important;margin:0;text-align:center;text-transform:uppercase;-webkit-text-stroke:2.5px #FFD700;text-shadow:5px 5px 0px #000, 8px 8px 15px rgba(0,0,0,0.9);font-family:Arial Black, Arial, sans-serif !important;line-height:1.05;letter-spacing:1px;position:relative;z-index:1;}'
+CSS += '.jamb-header p{color:#FFD700 !important;text-align:center;font-size:16px;font-weight:900;margin:10px 0 0 0;letter-spacing:3px;position:relative;z-index:1;}'
 CSS += '.student-bar{background-color:#FFFFFF;border:2px solid #0B2C4A;border-top:none;padding:10px 14px;color:#0B2C4A !important;font-weight:900;font-size:15px;text-align:center;}'
 CSS += '.card{background-color:#FFFFFF !important;padding:24px;border-radius:12px;margin-top:14px;border-top:6px solid #FFD700;}'
 CSS += '.login-title{color:#0B2C4A !important;font-size:30px !important;font-weight:900 !important;text-align:center;text-transform:uppercase;margin:0;font-family:Arial Black, Arial, sans-serif;}'
@@ -74,7 +75,7 @@ def show_pie_chart(correct, wrong, title, student_name=''):
     st.markdown(pie_html, unsafe_allow_html=True)
     st.bar_chart(pd.DataFrame({'Result': ['Correct','Wrong'], 'Count': [correct, wrong]}).set_index('Result'))
 
-st.markdown('<div class="jamb-header"><h1>EBUNTAYO SECONDARY SCHOOL</h1><p>FIRST TERM CBT EXAMINATION | GABRIEL CBT PRO | LANDSCAPE MODE</p></div>', unsafe_allow_html=True)
+st.markdown('<div class="jamb-header"><div class="cap-bg">🎓</div><h1>🎓 EBUNTAYO SECONDARY SCHOOL 🎓</h1><p>FIRST TERM CBT EXAMINATION | GABRIEL CBT PRO | LANDSCAPE MODE</p></div>', unsafe_allow_html=True)
 
 if 'questions' not in st.session_state: st.session_state.questions = DEFAULT_QUESTIONS.copy()
 if 'results' not in st.session_state: st.session_state.results = []
@@ -120,14 +121,11 @@ if role.startswith('TEACHER'):
         st.markdown('</div>', unsafe_allow_html=True)
         st.markdown('---')
         st.subheader('TEACHER QUESTION PALETTE - Q1 TO Q50')
-        st.write('Green = DONE | Grey = EMPTY. Click a number below to set that question.')
-        # Teacher palette for current subject/class selection
         st.markdown('<p class="field-label">CHOOSE SUBJECT / CLASS TO SET FOR</p>', unsafe_allow_html=True)
         tc1, tc2, tc3 = st.columns(3)
         tq_subj_p = tc1.selectbox('SUBJECT FOR PALETTE', ALL_SUBJECTS, key='t_subj_pal', label_visibility='collapsed')
         tq_class_p = tc2.selectbox('CLASS FOR PALETTE', ALL_CLASSES, key='t_class_pal', label_visibility='collapsed')
         tq_term_p = tc3.selectbox('TERM FOR PALETTE', ['First Term','Second Term','Third Term'], key='t_term_pal', label_visibility='collapsed')
-        # Count how many for this subject/class
         filt_pal = [q for q in st.session_state.questions if q.get('subject')==tq_subj_p and q.get('class')==tq_class_p and q.get('term')==tq_term_p]
         done_nos = set([q.get('qno',0) for q in filt_pal])
         st.markdown('<div class="palette-box"><p class="palette-title">QUESTION PALETTE - ' + tq_subj_p + ' | ' + tq_class_p + ' | ' + str(len(done_nos)) + ' / 50 DONE</p></div>', unsafe_allow_html=True)
@@ -146,7 +144,6 @@ if role.startswith('TEACHER'):
         st.markdown('<p class="field-label">QUESTION NUMBER (1 TO 50)</p>', unsafe_allow_html=True)
         qno = st.selectbox('QUESTION NUMBER', list(range(1, 51)), index=st.session_state.selected_qno-1, key='qno_select', label_visibility='collapsed')
         st.session_state.selected_qno = qno
-        # If question exists, show it
         existing = None
         for q in filt_pal:
             if q.get('qno')==qno: existing = q; break
@@ -172,7 +169,6 @@ if role.startswith('TEACHER'):
             opts = [o1,o2,o3,o4]
             ans = opts[['Option A','Option B','Option C','Option D'].index(corr)]
             if tq_q and all(opts):
-                # Remove old if exists
                 st.session_state.questions = [q for q in st.session_state.questions if not (q.get('subject')==tq_subj_p and q.get('class')==tq_class_p and q.get('term')==tq_term_p and q.get('qno')==qno)]
                 st.session_state.questions.append({'q': tq_q, 'options': opts, 'answer': ans, 'subject': tq_subj_p, 'class': tq_class_p, 'term': tq_term_p, 'topic': tq_topic, 'type': 'Objective', 'passage': '', 'qno': qno})
                 st.success('Q' + str(qno) + ' Saved! Next: Q' + str(qno+1) if qno<50 else 'Q50 Saved! All Done!')
@@ -241,7 +237,6 @@ if role.startswith('ADMIN'):
                 show_pie_chart(s, t-s, str(row['subject']), student_name=str(row['name']))
         else:
             st.info('No results yet.')
-        st.write('Student PIN: ' + EXAM_PIN)
     elif ap:
         st.error('Wrong Password')
     st.markdown('</div>', unsafe_allow_html=True)
@@ -251,7 +246,6 @@ if role.startswith('STUDENT'):
         if st.session_state.submitted_msg:
             st.markdown('<div class="success-box"><p>EXAM SUBMITTED SUCCESSFULLY!</p><p style="font-size:15px;">Next student can login.</p></div>', unsafe_allow_html=True)
             st.session_state.submitted_msg = False
-        # STUDENT LOGIN IN 2 COLUMNS - LANDSCAPE, LIKE BEFORE BUT WIDER
         st.markdown('<div class="card">', unsafe_allow_html=True)
         st.markdown('<p class="login-title">STUDENT LOGIN</p>', unsafe_allow_html=True)
         st.markdown('<p class="login-sub">Secure Login - Full Name + Exam PIN</p>', unsafe_allow_html=True)
@@ -298,9 +292,7 @@ if role.startswith('STUDENT'):
         st.markdown('<p class="login-title">PROFILE CHECK</p>', unsafe_allow_html=True)
         st.markdown('<p style="text-align:center;color:#0B2C4A;font-weight:800;">Student: ' + str(info['name']) + '<br>Class: ' + str(info['class']) + ' | Subject: ' + str(info['subject']) + '<br>Total Questions: ' + str(len(filt)) + ' | Time: ' + str(info['mins']) + ' Mins</p>', unsafe_allow_html=True)
         if st.button('CONFIRM & START EXAM'):
-            shuffled = filt.copy()
-            # DO NOT SHUFFLE ORDER NOW - Teacher set Q1 to Q50 in order, keep order so palette matches
-            st.session_state.shuffled_q = shuffled
+            st.session_state.shuffled_q = filt.copy()
             st.session_state.start_time = datetime.now()
             st.session_state.exam_started = True
             st.session_state.current_q = 0
@@ -340,9 +332,7 @@ if role.startswith('STUDENT'):
             st.markdown('<div style="background:#FF0000;color:white;text-align:center;padding:8px;font-weight:900;font-size:20px;border:2px solid #0B2C4A;border-top:none;">TIME: ' + str(total_sec//60).zfill(2) + ':' + str(total_sec%60).zfill(2) + ' | Questions ' + str(st.session_state.current_q+1) + '-' + str(min(st.session_state.current_q+2, len(st.session_state.shuffled_q))) + ' of ' + str(len(st.session_state.shuffled_q)) + '</div>', unsafe_allow_html=True)
         filtered = st.session_state.shuffled_q
         total_q = len(filtered)
-        # 2 QUESTIONS IN A ROW - LANDSCAPE
         st.markdown('<p style="color:#0B2C4A;font-weight:900;font-size:18px;text-align:center;">2 QUESTIONS IN A ROW - LANDSCAPE VIEW</p>', unsafe_allow_html=True)
-        # Show current pair: current_q and current_q+1
         idx1 = st.session_state.current_q
         idx2 = st.session_state.current_q + 1
         col1, col2 = st.columns(2)
@@ -367,7 +357,6 @@ if role.startswith('STUDENT'):
                         st.rerun()
                 else:
                     st.markdown('<div class="q-box"><p class="q-title">End of Questions</p></div>', unsafe_allow_html=True)
-        # PALETTE - BELOW 2 QUESTIONS, 10 PER ROW
         st.markdown('<div class="palette-box"><p class="palette-title">QUESTION PALETTE - Q1 TO Q' + str(total_q) + ' - CLICK NUMBER TO JUMP (2 AT A TIME)</p></div>', unsafe_allow_html=True)
         for row_start in range(0, total_q, 10):
             pcols = st.columns(10)
@@ -403,4 +392,5 @@ if role.startswith('STUDENT'):
                 st.session_state.active_students = [a for a in st.session_state.active_students if a['name']!=info['name']]
                 st.session_state.exam_started = False; st.session_state.profile_ok = False; st.session_state.submitted_msg = True; st.session_state.current_q = 0; st.session_state.answers_dict = {}; st.session_state.flagged = set(); st.rerun()
 
-st.markdown('<div class="footer">EBUNTAYO SECONDARY SCHOOL | GABRIEL CBT PRO<br>BUILT BY <span>ACHONWA GABRIEL</span> | Admin: admin123 | Teacher: teacher123 | PIN: EBS2026</div>', unsafe_allow_html=True)
+# SAFE FOOTER - NO ADMIN / TEACHER PASSWORDS - ONLY EXAM PIN
+st.markdown('<div class="footer">🎓 EBUNTAYO SECONDARY SCHOOL | GABRIEL CBT PRO<br>BUILT BY <span>ACHONWA GABRIEL UCHECHUKWU</span> | Exam PIN: EBS2026</div>', unsafe_allow_html=True)
