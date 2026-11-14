@@ -11,31 +11,31 @@ EXAM_PIN = 'EBS2026'
 
 CSS = '<style>'
 CSS += '.stApp{background-color:#F2F2F2 !important;}'
-CSS += '.block-container{padding-top:1rem !important;padding-bottom:1rem !important;max-width:100% !important;}'
+CSS += '.block-container{padding-top:0.8rem !important;padding-bottom:1rem !important;max-width:100% !important;}'
 CSS += 'div[data-testid="stVerticalBlock"]{gap:0.6rem !important;}'
-CSS += '.jamb-header{background-color:#0B2C4A;color:white;padding:16px 10px;border-radius:8px 8px 0 0;border:4px solid #FFD700;position:relative;overflow:hidden;}'
-CSS += '.cap-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:150px;opacity:0.12;z-index:0;}'
-CSS += '.jamb-header h1{color:white !important;font-size:46px !important;font-weight:900 !important;margin:0;text-align:center;text-transform:uppercase;-webkit-text-stroke:2px #FFD700;text-shadow:4px 4px 0px #000;font-family:Arial Black, Arial, sans-serif !important;line-height:1.1;position:relative;z-index:1;}'
-CSS += '.jamb-header p{color:#FFD700 !important;text-align:center;font-size:14px;font-weight:900;margin:8px 0 0 0;letter-spacing:2px;position:relative;z-index:1;}'
+# BIG HEADER - TALLER NAVY, BIGGER BOLDER SCHOOL NAME
+CSS += '.jamb-header{background-color:#0B2C4A;color:white;padding:34px 12px 28px 12px;border-radius:10px 10px 0 0;border:6px solid #FFD700;position:relative;overflow:hidden;min-height:150px;}'
+CSS += '.cap-bg{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:260px;opacity:0.14;z-index:0;}'
+CSS += '.jamb-header h1{color:white !important;font-size:72px !important;font-weight:900 !important;margin:0;text-align:center;text-transform:uppercase;-webkit-text-stroke:3.5px #FFD700;text-shadow:6px 6px 0px #000, 10px 10px 20px rgba(0,0,0,0.9);font-family:Arial Black, Arial, sans-serif !important;line-height:1.0;letter-spacing:2px;position:relative;z-index:1;}'
+CSS += '.jamb-header p{color:#FFD700 !important;text-align:center;font-size:18px;font-weight:900;margin:14px 0 0 0;letter-spacing:3px;position:relative;z-index:1;}'
 CSS += '.student-bar{background-color:#FFFFFF;border:2px solid #0B2C4A;border-top:none;padding:10px;color:#0B2C4A !important;font-weight:900;font-size:15px;text-align:center;}'
 CSS += '.card{background-color:#FFFFFF !important;padding:22px;border-radius:10px;margin-top:12px;border-top:5px solid #FFD700;}'
 CSS += '.login-title{color:#0B2C4A !important;font-size:28px !important;font-weight:900 !important;text-align:center;text-transform:uppercase;margin:0;font-family:Arial Black, Arial, sans-serif;}'
 CSS += '.login-sub{text-align:center;color:#444 !important;font-weight:700;font-size:14px;}'
 CSS += '.field-label{color:#0B2C4A !important;font-weight:900 !important;font-size:16px !important;text-transform:uppercase;margin-top:12px;margin-bottom:4px;}'
-CSS += '.select-role{color:#0B2C4A !important;font-weight:900 !important;font-size:18px !important;text-transform:uppercase;margin:0;}'
+# SINGLE SELECT ROLE - CLEAN, NO DOUBLE
+CSS += 'div[data-testid="stRadio"]{margin-top:8px !important;}'
+CSS += 'div[data-testid="stRadio"] > label{font-size:20px !important;font-weight:900 !important;color:#0B2C4A !important;text-transform:uppercase !important;}'
 CSS += 'label{font-weight:900 !important;color:#0B2C4A !important;font-size:15px !important;}'
 CSS += 'input,textarea,select{background-color:#fff !important;color:#000 !important;border:2px solid #0B2C4A !important;border-radius:8px !important;font-weight:800 !important;font-size:15px !important;}'
 CSS += '.stButton>button{background-color:#0A9D58 !important;color:white !important;font-weight:900 !important;border-radius:8px;padding:10px;width:100%;text-transform:uppercase;font-size:14px !important;}'
 CSS += '.footer{text-align:center;margin-top:14px;padding:12px;background-color:#0B2C4A;border-radius:8px;color:white !important;font-weight:700;font-size:13px;}'
 CSS += '.footer span{color:#FFD700 !important;}'
-# BALANCED SPACING - NOT TOO CLOSE, NOT TOO FAR - EASY TO READ
 CSS += '.q-box{background-color:white;border:2px solid #0B2C4A;padding:18px 18px 14px 18px;border-radius:12px;margin-top:14px;margin-bottom:6px;}'
 CSS += '.q-title{color:#0B2C4A !important;font-weight:900;font-size:16px;margin:0 0 10px 0;}'
 CSS += '.q-text{color:#000 !important;font-weight:800;font-size:21px;line-height:1.5;margin:0 0 14px 0;}'
-CSS += 'div[data-testid="stRadio"]{gap:8px !important;margin-top:4px !important;}'
 CSS += 'div[data-testid="stRadio"] label{color:#000 !important;font-size:17px !important;font-weight:700 !important;background:#F8F8F8 !important;padding:11px 12px !important;border:2px solid #0B2C4A !important;border-radius:10px !important;margin-bottom:8px !important;width:100% !important;display:flex !important;align-items:center !important;line-height:1.4 !important;}'
 CSS += 'div[data-testid="stRadio"] p{color:#000 !important;font-weight:700 !important;font-size:17px !important;margin:0 !important;line-height:1.4 !important;}'
-CSS += 'div[data-testid="stRadio"] > label{border:none !important;background:none !important;padding:0 !important;}'
 CSS += '.success-box{background-color:#0A9D58;color:white !important;padding:16px;border-radius:10px;text-align:center;font-size:18px;font-weight:900;margin-top:12px;}'
 CSS += '.student-card{background-color:#fff !important;padding:14px;border-radius:10px;margin-top:10px;border:2px solid #0B2C4A;}'
 CSS += '.student-name{color:#0B2C4A !important;font-size:18px !important;font-weight:900 !important;text-align:center;text-transform:uppercase;margin:0;}'
@@ -96,8 +96,8 @@ if 'active_students' not in st.session_state: st.session_state.active_students =
 
 is_in_exam = st.session_state.exam_started or st.session_state.profile_ok
 if not is_in_exam:
-    st.markdown('<p class="select-role">SELECT ROLE</p>', unsafe_allow_html=True)
-    role = st.radio('SELECT ROLE', ['STUDENT - WRITE EXAM', 'TEACHER - SET QUESTIONS', 'ADMIN - MONITOR & RESULTS'], horizontal=True, label_visibility='collapsed', key='role_select')
+    # FIXED: ONLY ONE SELECT ROLE - NO DOUBLE, NO EXTRA MARKDOWN
+    role = st.radio('SELECT ROLE', ['STUDENT - WRITE EXAM', 'TEACHER - SET QUESTIONS', 'ADMIN - MONITOR & RESULTS'], horizontal=True, key='role_select')
 else:
     role = 'STUDENT - WRITE EXAM'
     if st.button('LOGOUT / BACK TO LOGIN - End This Exam'):
@@ -325,7 +325,6 @@ if role.startswith('STUDENT'):
             st.markdown('<div style="background:#FF0000;color:white;text-align:center;padding:8px;font-weight:900;font-size:18px;border:2px solid #0B2C4A;border-top:none;">TIME: ' + str(total_sec//60).zfill(2) + ':' + str(total_sec%60).zfill(2) + ' | Questions ' + str(st.session_state.current_q+1) + '-' + str(min(st.session_state.current_q+2, len(st.session_state.shuffled_q))) + ' of ' + str(len(st.session_state.shuffled_q)) + '</div>', unsafe_allow_html=True)
         filtered = st.session_state.shuffled_q
         total_q = len(filtered)
-        # BALANCED: QUESTION + ANSWERS IN SAME BOX, WITH GOOD SPACING TO READ WELL
         idx_list = [st.session_state.current_q, st.session_state.current_q+1]
         for idx in idx_list:
             if idx < total_q:
